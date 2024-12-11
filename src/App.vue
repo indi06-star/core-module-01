@@ -23,6 +23,9 @@
 import LogoutDialog from "./components/LogoutDialog.vue";
 
 export default {
+  components :{
+    LogoutDialog
+  },
   data() {
     return {
       showLogoutDialog: false,
