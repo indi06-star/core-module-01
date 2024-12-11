@@ -3,6 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/dashboard">
+          <HeroSection/>
         
           <h4>  <img src="./assets/tech-solution-logo.jpg" alt="Company Logo" width="50" />Modern Tech-Solutions</h4>
           <span><h5>Dashboard</h5></span>
@@ -20,11 +21,18 @@
 </template>
 
 <script>
+import HeroSection from "./components/HeroSection.vue";
 import LogoutDialog from "./components/LogoutDialog.vue";
 
 export default {
+<<<<<<< HEAD
   components :{
     LogoutDialog
+=======
+  components:{
+    HeroSection
+
+>>>>>>> 1cb46550cb240cda41abcfa67c5273fb3765b063
   },
   data() {
     return {
