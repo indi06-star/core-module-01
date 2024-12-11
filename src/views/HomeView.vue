@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
   </div>
 </template>
 
@@ -8,9 +8,6 @@
 
 
 export default {
-  name: 'HomeView',
-  components: {
-    
-  }
+ 
 }
 </script>
