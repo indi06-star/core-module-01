@@ -21,18 +21,13 @@
 </template>
 
 <script>
-import HeroSection from "./components/HeroSection.vue";
+
 import LogoutDialog from "./components/LogoutDialog.vue";
 
 export default {
-<<<<<<< HEAD
-  components :{
-    LogoutDialog
-=======
   components:{
-    HeroSection
-
->>>>>>> 1cb46550cb240cda41abcfa67c5273fb3765b063
+    
+    LogoutDialog
   },
   data() {
     return {
