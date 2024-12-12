@@ -1,7 +1,4 @@
 <template>
-  <div>
-    
-  </div>
   <div class="home">
     <section class="hero is-dark">
       <div class="hero-body">
@@ -18,24 +15,13 @@
 </template>
 
 <script>
-import HeroSection from '@/components/HeroSection.vue';
-
 export default {
-  components:{
-    HeroSection
-  },
   name: 'HomeView',
 };
 </script>
 
 <style scoped>
-.hero {
-  text-align: center;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 300px;
-}
+
 .hero-body {
   padding: 20px;
 }
@@ -53,3 +39,4 @@ export default {
   padding: 10px 20px;
 }
 </style>
+
