@@ -1,40 +1,35 @@
 <template>
-  <div class="container my-5">
-    <h1>Employees Dashboard</h1>
+  <nav-bar/>
+   <div class="container py-5">
     <div class="row">
-      <!-- Render Employee Cards -->
       <EmployeeCard
         v-for="employee in employees"
         :key="employee.id"
         :employee="employee"
-        @view-details="viewDetails"
+        @showDetails="showModal"
       />
     </div>
-
-    <!-- Render Employee Details -->
-    <EmployeeDetails
+      
+      <EmployeeDetailsModal
       v-if="selectedEmployee"
       :employee="selectedEmployee"
+      @close="selectedEmployee = null"
     />
+    <h1>Dashboard</h1>
   </div>
-  <Hiring/> <Dismissal/> 
-  
+
 </template>
 
 <script>
 import EmployeeCard from "@/components/EmployeeCard.vue";
-import EmployeeDetails from "@/components/EmployeeDetails.vue";
-import Hiring from "@/components/Hiring.vue";
-import Dismissal from "@/components/Dismissal.vue";
-
+import EmployeeDetailsModal from "@/components/EmployeeDetailsModal.vue";
+import NavBar from "@/components/NavBar.vue";
 
 export default {
   components: {
     EmployeeCard,
-    EmployeeDetails,
-    Hiring,
-    Dismissal
-  
+    EmployeeDetailsModal,
+    NavBar
   },
   data() {
     return {

@@ -13,30 +13,11 @@
     </section>
   </div>
 </template>
-
 <script>
 export default {
-  name: 'HomeView',
-};
+  
+}
 </script>
-
-<style scoped>
-
-.hero-body {
-  padding: 20px;
-}
-.title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #fff;
-}
-.subtitle {
-  font-size: 1.5rem;
-  color: #ddd;
-}
-.btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-}
+<style lang="">
+  
 </style>
-
