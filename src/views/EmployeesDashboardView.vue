@@ -30,17 +30,16 @@ export default {
   },
   data() {
     return {
-      //Employees details 
       employees: [
         {
           id: 1,
-          name: "Sibongile Nkosi",
-          position: "Software Engineer",
-          department: "Development",
-          image: require("@/assets/Sibongile.png"),
-          contact: "sibongile.nkosi@moderntech.com" ,
-          history: "Joined in 2015, promoted to Senior in 2018",
-          reviews: ["Exceeds expectations", "Great team leader", "Meets goals"], //Put a screenshoot of a picture of sibongiles Performance here
+          name: "John Doe",
+          position: "Manager",
+          department: "HR",
+          image: "male.png",
+          contact: "john.doe@example.com",
+          history: "5 years of experience in HR management.",
+          reviews: ["Exceeds expectations", "Great team leader", "Meets goals"],
           salary: 5000,
           leaveRequests: [
             { date: "2024-12-01", status: "Approved" },
@@ -50,12 +49,12 @@ export default {
         },
         {
           id: 2,
-          name: "Lungile Moyo",
-          position: "HR Manager",
-          department: "HR",
-          image: require("@/assets/Lungile.png"),
-          contact: "lungile.moyo@moderntech.com",
-          history: "Joined in 2013, promoted to Manager in 2017",
+          name: "Jane Smith",
+          position: "Software Engineer",
+          department: "IT",
+          image: "female.png",
+          contact: "jane.smith@example.com",
+          history: "3 years of experience in software development.",
           reviews: ["Outstanding problem-solving", "Excellent coding skills"],
           salary: 4500,
           leaveRequests: [
@@ -63,106 +62,7 @@ export default {
             { date: "2024-12-08", status: "Pending" },
           ],
         },
-        {
-          id: 3,
-          name: "Thabo Molefe",
-          position: "Quality Analyst",
-          department: "QA",
-          image: require("@/assets/Thabo.png"),
-          contact: "thabo.molefe@moderntech.com",
-          history: "Joined in 2018",
-          reviews: ["Outstanding problem-solving", "Excellent coding skills"],
-          salary: 4500,
-          leaveRequests: [
-            { date: "2024-12-03", status: "Approved" },
-            { date: "2024-12-08", status: "Pending" },
-          ],
-        },   {
-          id: 4,
-          name: "Keshav Naidoo",
-          position: "Sales Representative",
-          department: "Sales",
-          image: require("@/assets/Keshav.png"),
-          contact: "keshav.naidoo@moderntech.com",
-          history: "Joined in 2020",
-          reviews: ["Outstanding problem-solving", "Excellent coding skills"],
-          salary: 4500,
-          leaveRequests: [
-            { date: "2024-12-03", status: "Approved" },
-            { date: "2024-12-08", status: "Pending" },
-          ],
-        },   {
-          id: 5,
-          name: "Zanele Khumalo",
-          position: "Marketing Specialist",
-          department: "Marketing",
-          image: require("@/assets/Zanele.png"),
-          contact: "zanele.khumalo@moderntech.com",
-          history: "Joined in 2019",
-          reviews: ["Outstanding problem-solving", "Excellent coding skills"],
-          salary: 4500,
-          leaveRequests: [
-            { date: "2024-12-03", status: "Approved" },
-            { date: "2024-12-08", status: "Pending" },
-          ],
-        },   {
-          id: 6,
-          name: "Sipho Zulu",
-          position: "UI/UX Designer",
-          department: "",
-          image: require("@/assets/Lungile.png"),
-          contact: "lungile.moyo@moderntech.com",
-          history: "Joined in 2013, promoted to Manager in 2017",
-          reviews: ["Outstanding problem-solving", "Excellent coding skills"],
-          salary: 4500,
-          leaveRequests: [
-            { date: "2024-12-03", status: "Approved" },
-            { date: "2024-12-08", status: "Pending" },
-          ],
-        },   {
-          id: 2,
-          name: "Lungile Moyo",
-          position: "HR Manager",
-          department: "HR",
-          image: require("@/assets/Lungile.png"),
-          contact: "lungile.moyo@moderntech.com",
-          history: "Joined in 2013, promoted to Manager in 2017",
-          reviews: ["Outstanding problem-solving", "Excellent coding skills"],
-          salary: 4500,
-          leaveRequests: [
-            { date: "2024-12-03", status: "Approved" },
-            { date: "2024-12-08", status: "Pending" },
-          ],
-        },   {
-          id: 2,
-          name: "Lungile Moyo",
-          position: "HR Manager",
-          department: "HR",
-          image: require("@/assets/Lungile.png"),
-          contact: "lungile.moyo@moderntech.com",
-          history: "Joined in 2013, promoted to Manager in 2017",
-          reviews: ["Outstanding problem-solving", "Excellent coding skills"],
-          salary: 4500,
-          leaveRequests: [
-            { date: "2024-12-03", status: "Approved" },
-            { date: "2024-12-08", status: "Pending" },
-          ],
-        },   {
-          id: 2,
-          name: "Lungile Moyo",
-          position: "HR Manager",
-          department: "HR",
-          image: require("@/assets/Lungile.png"),
-          contact: "lungile.moyo@moderntech.com",
-          history: "Joined in 2013, promoted to Manager in 2017",
-          reviews: ["Outstanding problem-solving", "Excellent coding skills"],
-          salary: 4500,
-          leaveRequests: [
-            { date: "2024-12-03", status: "Approved" },
-            { date: "2024-12-08", status: "Pending" },
-          ],
-        },
-      
+        // Add more employees here...
       ],
       selectedEmployee: null, // Holds the currently selected employee for details view
     };
@@ -180,4 +80,3 @@ export default {
   padding: 20px;
 }
 </style>
-
