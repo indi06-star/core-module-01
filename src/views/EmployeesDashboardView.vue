@@ -17,19 +17,26 @@
     />
     <h1>Dashboard</h1>
   </div>
+  <Hiring/>
+  <Dismissal/>
+
 
 </template>
 
 <script>
+import Dismissal from "@/components/Dismissal.vue";
 import EmployeeCard from "@/components/EmployeeCard.vue";
 import EmployeeDetailsModal from "@/components/EmployeeDetailsModal.vue";
+import Hiring from "@/components/Hiring.vue";
 import NavBar from "@/components/NavBar.vue";
 
 export default {
   components: {
     EmployeeCard,
     EmployeeDetailsModal,
-    NavBar
+    NavBar,
+    Hiring,
+    Dismissal
   },
   data() {
     return {
