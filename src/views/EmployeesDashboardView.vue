@@ -17,16 +17,24 @@
       :employee="selectedEmployee"
     />
   </div>
+  <Hiring/> <Dismissal/> 
+  
 </template>
 
 <script>
 import EmployeeCard from "@/components/EmployeeCard.vue";
 import EmployeeDetails from "@/components/EmployeeDetails.vue";
+import Hiring from "@/components/Hiring.vue";
+import Dismissal from "@/components/Dismissal.vue";
+
 
 export default {
   components: {
     EmployeeCard,
     EmployeeDetails,
+    Hiring,
+    Dismissal
+  
   },
   data() {
     return {

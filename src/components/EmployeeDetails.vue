@@ -60,10 +60,10 @@
         </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
+</template>
+
+<script>
+export default {
     props: ["employee"],
     data() {
       return {
@@ -112,17 +112,16 @@
       },
     },
   };
-  </script>
+</script>
   
-  <style>
-  .text-success {
+<style>
+.text-success {
     color: green;
-  }
-  .text-warning {
+}
+.text-warning {
     color: orange;
-  }
-  .text-danger {
+}
+.text-danger {
     color: red;
-  }
-  </style>
-  
+}
+</style>
