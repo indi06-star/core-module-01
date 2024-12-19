@@ -9,6 +9,7 @@
 
 import AttendanceCalender from './components/AttendanceCalender.vue';
 import LeaveRequest from './components/LeaveRequest.vue';
+import Login from './components/Login.vue';
 import NavBar from './components/NavBar.vue';
 import Payroll from './views/PayrollView.vue';
 
@@ -17,7 +18,8 @@ export default {
     NavBar, // Registering the NavBar component
     Payroll,
     AttendanceCalender,
-    LeaveRequest
+    LeaveRequest,
+    Login
 
   },
   data() {

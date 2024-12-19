@@ -14,9 +14,9 @@
         <p><strong>Salary:</strong> R{{ employee.salary.toLocaleString() }}</p>
       </div>
       <div>
-        <h5>Performance Reviews</h5>
+        <h5 align="center"><strong>Performance Reviews</strong></h5>
         <ul>
-          <li v-for="(review, index) in employee.reviews" :key="index">
+          <li v-for="(review, index) in employee.reviews" >
             {{ review }}
             </li>
          </ul>
@@ -66,12 +66,23 @@
               </td>
             </tr>
           </tbody>
-        </table>
-        <br>
-
+        </table> 
+      <!-- Buttons to Show Different Sections -->
+      <div class="button-group">
+        <button @click="showSection('attendance')" class="btn btn-info"><strong>Calender to Update Attendance</strong></button>
+      </div>
+      <!-- Conditionally Render Sections -->
+      <div v-if="activeSection === 'attendance'">
+        <AttendanceCalender
+          :attendanceData="employee.attendance.map(record => record.date)" 
+          :approvedTimeOff="[]" 
+          @update-attendance="handleAttendanceUpdate"  
+        />
+      </div>
+      <br>
         <!-- Attendance Table -->
         <div>
-          <h5 align="center"><strong>Attendance</strong></h5>
+          <h5 align="center"><strong>Attendance Records</strong></h5>
           <br>
           <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -83,7 +94,7 @@
             <tbody>
               <tr v-for="(record, index) in employee.attendance" :key="index">
                 <td>{{ record.date }}</td>
-                <td>{{ record.status }}</td>
+                <td align="center">{{ record.status }}</td>
               </tr>
             </tbody>
           </table>
@@ -93,19 +104,6 @@
       <!-- Close Button -->
       <button @click="$emit('closeModal')" class="btn btn-secondary">Close</button>
 
-      <!-- Buttons to Show Different Sections -->
-      <div class="button-group">
-        <button @click="showSection('attendance')" class="btn btn-info">Update Attendance</button>
-      </div>
-
-      <!-- Conditionally Render Sections -->
-      <div v-if="activeSection === 'attendance'">
-        <AttendanceCalender
-          :attendanceData="employee.attendance.map(record => record.date)" 
-          :approvedTimeOff="[]" 
-          @update-attendance="handleAttendanceUpdate"  
-        />
-      </div>
     </div>
   </div>
 </template>
@@ -153,15 +151,15 @@ export default {
       }
     },
 
-    closeMessageModal() {
+  closeMessageModal() {
       this.isMessageModalVisible = false; // Hide the modal
     },
 
-    handleAttendanceUpdate({ date, status }) {
+  handleAttendanceUpdate({ date, status }) {
       // Check if the date already exists in the attendance records
-      const record = this.employee.attendance.find(record => record.date === date);
-      if (record) {
-        record.status = status; // Update the existing record
+    const record = this.employee.attendance.find(record => record.date === date);
+    if (record) {
+      record.status = status; // Update the existing record
       } else {
         this.employee.attendance.push({ date, status }); // Add a new record if not present
       }
@@ -262,5 +260,14 @@ export default {
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+ul{
+  text-align: center;
+}
+h5,h1, p{
+  color: black;
+}
+th{
+  font-size: 20px;
 }
 </style>
