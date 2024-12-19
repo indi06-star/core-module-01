@@ -1,7 +1,7 @@
 <template>
     <body class="loginbody">
         <div class="image-container">
-        <img :src="logo" width="350" height="350" alt="logo" class="centered-image">
+        <img :src="logo" width="300" height="200" alt="logo" class="centered-image">
     </div>
     <div class="login-container">
       <h2><strong>ADMINISTRATOR LOGIN</strong></h2>
@@ -112,8 +112,7 @@ export default {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-}
-  
+} 
 .error-modal .modal-content {
     background: white;
     padding: 20px;
@@ -128,7 +127,6 @@ export default {
   border-radius:8px;
   background-color: #F9F9F9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 0px;
 }
 h2 {
   text-align: center;

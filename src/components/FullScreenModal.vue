@@ -121,13 +121,13 @@ export default {
     employee: Object,
     isVisible: Boolean,
   },
-  data() {
-    return {
-      activeSection: '',
-      leaveRequests: [], // Holds the list of leave requests
-      isMessageModalVisible: false, // Controls visibility of the message modal
-      messageModal: '', // Stores the message to display
-    };
+data() {
+  return {
+    activeSection: '',
+    leaveRequests: [], // Holds the list of leave requests
+    isMessageModalVisible: false, // Controls visibility of the message modal
+    messageModal: '', // Stores the message to display
+  };
   },
   methods: {
     showSection(section) {
@@ -135,19 +135,19 @@ export default {
     },
 
     // Handle leave request submission
-    handleLeaveRequestSubmission(newRequest) {
-      this.leaveRequests.push(newRequest); // Add new leave request to the list
+  handleLeaveRequestSubmission(newRequest) {
+    this.leaveRequests.push(newRequest); // Add new leave request to the list
     },
 
     // Handle updating the status of a leave request (Approve/Deny)
-    handleLeaveRequestStatusUpdate({ id, status }) {
-      const request = this.employee.leaveRequests.find(req => req.id === id);
-      if (request) {
-        request.status = status; // Update the status of the leave request
+  handleLeaveRequestStatusUpdate({ id, status }) {
+    const request = this.employee.leaveRequests.find(req => req.id === id);
+    if (request) {
+      request.status = status; // Update the status of the leave request
 
         // Set the message and show the modal
-        this.messageModal = `Leave request ${status === 'Approved' ? 'approved' : 'denied'} successfully.`;
-        this.isMessageModalVisible = true;
+      this.messageModal = `Leave request ${status === 'Approved' ? 'approved' : 'denied'} successfully.`;
+      this.isMessageModalVisible = true;
       }
     },
 
@@ -168,7 +168,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .modal-fullscreen {
   position: fixed;
   top: 0;
@@ -263,6 +263,10 @@ export default {
 }
 ul{
   text-align: center;
+}
+li{
+  list-style: none;
+
 }
 h5,h1, p{
   color: black;
