@@ -1,38 +1,51 @@
 <template>
-  <div class="back">
-    <NavBar/>
-    <div class="home-view" :style="{ backgroundImage: `url(${backgroundImage})` }">
-      <div class="content">
-        <h1 class="title">{{ title }}</h1>
-        <p class="subtitle">{{ subtitle }}</p>
-        <button class="btn btn-primary" @click="goToDashboard">Employees Dashboard</button>
+  <div>
+    <Login v-if="!isLoggedIn" @login-success="handleLoginSuccess" />
+    <div v-else>
+      <NavBar />
+      <div class="home-view" :style="{ backgroundImage: `url(${backgroundImage})` }">
+        <div class="content">
+          <h1 class="title">{{ title }}</h1>
+          <p class="subtitle">{{ subtitle }}</p>
+          <button class="btn btn-primary" @click="goToDashboard">Employees Dashboard</button>
+        </div>
       </div>
     </div>
   </div>
- 
-  </template>
-  
-  <script>
-import NavBar from '@/components/NavBar.vue';
+</template>
 
-  export default {
-    components:{
-        NavBar
+<script>
+import Login from "@/components/Login.vue";
+import NavBar from "@/components/NavBar.vue";
+
+export default {
+  components: {
+    NavBar,
+    Login,
+  },
+  data() {
+    return {
+      title: "Welcome to Employee Management",
+      subtitle: "Manage your employees, attendance, and payroll easily.",
+      backgroundImage: require("../assets/background5.jpg"),
+      isLoggedIn: false, // Tracks login status
+    };
+  },
+  methods: {
+    goToDashboard() {
+      this.$router.push("/dashboard");
     },
-    data() {
-      return {
-        title: "Welcome to Employee Management",
-        subtitle: "Manage your employees, attendance, and payroll easily.",
-        backgroundImage: require("../assets/background5.jpg"), // Replace with your background image URL
-      };
+    handleLoginSuccess() {
+      this.isLoggedIn = true; // Update login status
     },
-    methods: {
-      goToDashboard() {
-        this.$router.push("/dashboard");
-      },
-    },
-  };
-  </script>
+  },
+};
+</script>
+
+<style scoped>
+/* Existing styles */
+</style>
+
   
 <style scoped>
 .home-view {

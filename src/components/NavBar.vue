@@ -82,16 +82,11 @@ export default {
 }
 li{
   text-align: center;
-  color: white
-  
- 
+  color: white 
 }
 .navbar navbar-expand-lg bg-body-tertiary{
   color: blue;
-
 }
-
-
 
 </style>
 

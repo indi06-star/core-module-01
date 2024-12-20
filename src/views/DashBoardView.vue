@@ -25,7 +25,7 @@
     </div>
     
     <!-- Render Employee Details -->
-    <EmployeeDetails
+  <EmployeeDetails
       v-if="selectedEmployee"
       :employee="selectedEmployee"
     />
@@ -79,8 +79,6 @@ export default {
           salary: 70000,
           reviews: ["Exceeds Expectations","Great team leader", "Meets goals on time"],
           leaveRequests: [
-            { date: "2024-11-22",
-            reason: "Sick Leave", status: "Approved" },
             { date: "2024-12-01",reason:"Personal" ,status: "Pending" },
           ],
           attendance:[
@@ -155,7 +153,6 @@ export default {
           salary: 55000,
           reviews: ["Exceeds Expectations","Great team leader", "Meets goals on time"],
           leaveRequests: [
-            { date: "2024-12-03", reason:"Medical Appointment", status: "Approved" },
             { date: "2024-12-08",reason: "Personal", status: "Pending" },
           ],
           attendance:[
@@ -480,10 +477,7 @@ export default {
       );
     },
   
-  }}
-  
- 
-  
+  }}  
 </script>
 <style scoped>
 h1 {
@@ -510,11 +504,7 @@ h1 {
 }
 .body{
   color: rgb(69, 114, 164)
-
 }
-
-
-
 </style>
 
 

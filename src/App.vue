@@ -9,6 +9,7 @@
 
 import AttendanceCalender from './components/AttendanceCalender.vue';
 import LeaveRequest from './components/LeaveRequest.vue';
+import Login from './components/Login.vue';
 import NavBar from './components/NavBar.vue';
 import Payroll from './views/PayrollView.vue';
 
@@ -19,7 +20,7 @@ export default {
     Payroll,
     AttendanceCalender,
     LeaveRequest,
-  
+    Login
 
   },
   data() {
@@ -36,7 +37,6 @@ export default {
     },
   };
 </script>
-
 <style scoped >
 /* Hero section styles */
 .home-view {
@@ -50,23 +50,23 @@ export default {
     text-align: center;
   }
   
-  .content {
+.content {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 20px;
     border-radius: 10px;
   }
   
-  .title {
+.title {
     font-size: 2.5rem;
     animation: slideIn 2s ease-in-out;
   }
   
-  .subtitle {
+.subtitle {
     font-size: 1.2rem;
     animation: slideIn 3s ease-in-out;
   }
   
-  @keyframes slideIn {
+@keyframes slideIn {
     0% {
       transform: translateX(-100%);
     }
@@ -74,30 +74,6 @@ export default {
       transform: translateX(0);
     }
   }
-
-
-
-
-
-
-
-
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  text-align: center;
-  background: url("./assets/background4.jpg");
-  background-repeat: repeat;
-  background-position: center;
-  background-attachment: fixed; /* Background moving effect */
-  color: white;
-  animation: moveBg 20s linear infinite; /* Background animation */
-  font-size: 100px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
 @keyframes moveBg {
   from {
@@ -107,11 +83,9 @@ export default {
     background-position: 100% 0;
   }
 }
-
 .hero-body {
   padding: 20px;
 }
-
 /* Title animation */
 .title {
   font-size: 60px;
@@ -121,14 +95,12 @@ export default {
   transform: translateX(-50%);
   animation: slideInTitle 2s ease-out forwards; /* Slide in from left */
 }
-
 @keyframes slideInTitle {
   to {
     transform: translateX(0);
     opacity: 1;
   }
 }
-
 /* Subtitle animation */
 .subtitle {
   font-size: 1.5rem;
@@ -138,14 +110,12 @@ export default {
   animation: slideInSubtitle 2.5s ease-out forwards; /* Slight delay after title */
   color: black;
 }
-
 @keyframes slideInSubtitle {
   to {
     transform: translateX(0);
     opacity: 1;
   }
 }
-
 /* Button hover effect */
 .btn {
   margin-top: 20px;
@@ -159,18 +129,15 @@ export default {
   cursor: pointer;
   transition: all 0.3s ease-in-out; /* Smooth transition */
 }
-
 .btn:hover {
   background-color: #588b5a;
   transform: scale(1.1); /* Slight zoom effect */
 }
-
 /* Button fade-in animation */
 .animated-btn {
   opacity: 0;
   animation: fadeInBtn 3s ease-out forwards; /* Delayed fade-in */
 }
-
 @keyframes fadeInBtn {
   to {
     opacity: 1;

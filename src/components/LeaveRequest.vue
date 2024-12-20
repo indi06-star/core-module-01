@@ -33,75 +33,75 @@
         </div>
       </div>
     </div>
-  </template>
+</template>
   
-  <script>
-  export default {
-    props: {
-      leaveRequests: Array, // Receive the list of leave requests from the parent
+<script>
+export default {
+  props: {
+    leaveRequests: Array, // Receive the list of leave requests from the parent
     },
-    data() {
-      return {
-        showForm: false, // To toggle between leave request form and list
-        leaveRequest: {
-          reason: '',
-          startDate: '',
-          endDate: '',
+  data() {
+    return {
+      showForm: false, // To toggle between leave request form and list
+      leaveRequest: {
+        reason: '',
+        startDate: '',
+        endDate: '',
         },
       };
     },
-    methods: {
-      // Toggle the visibility of the leave request form
-      toggleLeaveRequestForm() {
-        this.showForm = !this.showForm;
-      },
+  methods: {
+    // Toggle the visibility of the leave request form
+    toggleLeaveRequestForm() {
+      this.showForm = !this.showForm;
+    },
   
       // Submit a new leave request
-      submitLeaveRequest() {
-        const newRequest = {
-          ...this.leaveRequest,
-          id: Date.now(), // Generate a unique ID for the request
-          status: 'Pending', // Initial status
-          name: 'Employee', // Replace with the actual employee name if available
-        };
-        this.$emit('submit-request', newRequest); // Emit event to parent to add the request
+    submitLeaveRequest() {
+      const newRequest = {
+        ...this.leaveRequest,
+        id: Date.now(), // Generate a unique ID for the request
+        status: 'Pending', // Initial status
+        name: 'Employee', // Replace with the actual employee name if available
+      };
+      this.$emit('submit-request', newRequest); // Emit event to parent to add the request
   
-        // Reset the form after submission
-        this.leaveRequest = {
-          reason: '',
-          startDate: '',
-          endDate: '',
-        };
-        this.showForm = false; // Close the form after submission
-      },
+      // Reset the form after submission
+      this.leaveRequest = {
+         reason: '',
+        startDate: '',
+        endDate: '',
+      };
+      this.showForm = false; // Close the form after submission
+    },
   
-      // Approve the leave request
-      approveLeave(id) {
-        this.$emit('update-status', { id, status: 'Approved' });
-      },
+    // Approve the leave request
+    approveLeave(id) {
+      this.$emit('update-status', { id, status: 'Approved' });
+    },
   
       // Deny the leave request
-      denyLeave(id) {
-        this.$emit('update-status', { id, status: 'Denied' });
-      },
+    denyLeave(id) {
+       this.$emit('update-status', { id, status: 'Denied' });
+    },
     },
   };
-  </script>
+</script>
   
-  <style scoped>
-  /* Add some styling for the leave request form */
-  form {
+<style scoped>
+  /* styling for the leave request form */
+form {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
   }
-  form input {
+form input {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  button {
+button {
     padding: 8px 16px;
     border: none;
     background-color: #333;
@@ -109,8 +109,8 @@
     border-radius: 4px;
     cursor: pointer;
   }
-  button:hover {
+button:hover {
     background-color: black;
   }
-  </style>
+</style>
   

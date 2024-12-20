@@ -14,9 +14,9 @@
         <p><strong>Salary:</strong> R{{ employee.salary.toLocaleString() }}</p>
       </div>
       <div>
-        <h5>Performance Reviews</h5>
+        <h5 align="center"><strong>Performance Reviews</strong></h5>
         <ul>
-          <li v-for="(review, index) in employee.reviews" :key="index">
+          <li v-for="(review, index) in employee.reviews" >
             {{ review }}
             </li>
          </ul>
@@ -66,12 +66,23 @@
               </td>
             </tr>
           </tbody>
-        </table>
-        <br>
-
+        </table> 
+      <!-- Buttons to Show Different Sections -->
+      <div class="button-group">
+        <button @click="showSection('attendance')" class="btn btn-info"><strong>Calender to Update Attendance</strong></button>
+      </div>
+      <!-- Conditionally Render Sections -->
+      <div v-if="activeSection === 'attendance'">
+        <AttendanceCalender
+          :attendanceData="employee.attendance.map(record => record.date)" 
+          :approvedTimeOff="[]" 
+          @update-attendance="handleAttendanceUpdate"  
+        />
+      </div>
+      <br>
         <!-- Attendance Table -->
         <div>
-          <h5 align="center"><strong>Attendance</strong></h5>
+          <h5 align="center"><strong>Attendance Records</strong></h5>
           <br>
           <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -83,7 +94,7 @@
             <tbody>
               <tr v-for="(record, index) in employee.attendance" :key="index">
                 <td>{{ record.date }}</td>
-                <td>{{ record.status }}</td>
+                <td align="center">{{ record.status }}</td>
               </tr>
             </tbody>
           </table>
@@ -93,19 +104,6 @@
       <!-- Close Button -->
       <button @click="$emit('closeModal')" class="btn btn-secondary">Close</button>
 
-      <!-- Buttons to Show Different Sections -->
-      <div class="button-group">
-        <button @click="showSection('attendance')" class="btn btn-info">Update Attendance</button>
-      </div>
-
-      <!-- Conditionally Render Sections -->
-      <div v-if="activeSection === 'attendance'">
-        <AttendanceCalender
-          :attendanceData="employee.attendance.map(record => record.date)" 
-          :approvedTimeOff="[]" 
-          @update-attendance="handleAttendanceUpdate"  
-        />
-      </div>
     </div>
   </div>
 </template>
@@ -123,13 +121,13 @@ export default {
     employee: Object,
     isVisible: Boolean,
   },
-  data() {
-    return {
-      activeSection: '',
-      leaveRequests: [], // Holds the list of leave requests
-      isMessageModalVisible: false, // Controls visibility of the message modal
-      messageModal: '', // Stores the message to display
-    };
+data() {
+  return {
+    activeSection: '',
+    leaveRequests: [], // Holds the list of leave requests
+    isMessageModalVisible: false, // Controls visibility of the message modal
+    messageModal: '', // Stores the message to display
+  };
   },
   methods: {
     showSection(section) {
@@ -137,31 +135,31 @@ export default {
     },
 
     // Handle leave request submission
-    handleLeaveRequestSubmission(newRequest) {
-      this.leaveRequests.push(newRequest); // Add new leave request to the list
+  handleLeaveRequestSubmission(newRequest) {
+    this.leaveRequests.push(newRequest); // Add new leave request to the list
     },
 
     // Handle updating the status of a leave request (Approve/Deny)
-    handleLeaveRequestStatusUpdate({ id, status }) {
-      const request = this.employee.leaveRequests.find(req => req.id === id);
-      if (request) {
-        request.status = status; // Update the status of the leave request
+  handleLeaveRequestStatusUpdate({ id, status }) {
+    const request = this.employee.leaveRequests.find(req => req.id === id);
+    if (request) {
+      request.status = status; // Update the status of the leave request
 
         // Set the message and show the modal
-        this.messageModal = `Leave request ${status === 'Approved' ? 'approved' : 'denied'} successfully.`;
-        this.isMessageModalVisible = true;
+      this.messageModal = `Leave request ${status === 'Approved' ? 'approved' : 'denied'} successfully.`;
+      this.isMessageModalVisible = true;
       }
     },
 
-    closeMessageModal() {
+  closeMessageModal() {
       this.isMessageModalVisible = false; // Hide the modal
     },
 
-    handleAttendanceUpdate({ date, status }) {
+  handleAttendanceUpdate({ date, status }) {
       // Check if the date already exists in the attendance records
-      const record = this.employee.attendance.find(record => record.date === date);
-      if (record) {
-        record.status = status; // Update the existing record
+    const record = this.employee.attendance.find(record => record.date === date);
+    if (record) {
+      record.status = status; // Update the existing record
       } else {
         this.employee.attendance.push({ date, status }); // Add a new record if not present
       }
@@ -170,7 +168,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .modal-fullscreen {
   position: fixed;
   top: 0;
@@ -238,7 +236,7 @@ export default {
 }
 
 .modal-content {
-  background-color: rgb(221, 221, 239);
+  background-color: white;
   border: 2px solid blue;
   font-family: 'Times New Roman', Times, serif;
 }
@@ -262,5 +260,18 @@ export default {
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+ul{
+  text-align: center;
+}
+li{
+  list-style: none;
+
+}
+h5,h1, p{
+  color: black;
+}
+th{
+  font-size: 20px;
 }
 </style>
