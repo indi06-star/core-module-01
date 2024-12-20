@@ -1,6 +1,6 @@
 <template>
-
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <!--nav bar-->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <router-link to="/" class="navbar-brand" href="#">
       <img :src="logo" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
@@ -82,16 +82,11 @@ export default {
 }
 li{
   text-align: center;
-  color: white
-  
- 
+  color: white 
 }
 .navbar navbar-expand-lg bg-body-tertiary{
   color: blue;
-
 }
-
-
 
 </style>
 

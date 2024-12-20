@@ -1,8 +1,10 @@
 <template>
+  <!--used bootstrap cards with image slots-->
   <div class="row g-3"></div>
   <div class="col-md-4">
     <div class="card">
       <div class="card-header">
+        <!--used mustached braces  to get employees data-->
         <h5 class="card-title">{{ employee.name }}</h5>
       </div>
       <div class="card-body">
@@ -36,6 +38,7 @@ export default {
   methods: {
     openModal() {
       // Emit an event to open the modal with the employee's information
+      // Emit fu
       this.$emit('showModal', this.employee);
     },
   },

@@ -1,4 +1,5 @@
 <template>
+  <!--Calender created using sets from https://dev.to/owais11-art/how-to-create-a-calendar-in-vue-4m0k -->
   <div class="calendar-container">
     <!-- Calendar Header -->
     <div class="calendar-header">
@@ -7,7 +8,6 @@
       <button @click="changeMonth(1)" class="nav-button">&#8594;</button>
       <button @click="closeCalendar" class="close-button">X</button>
     </div>
-
     <!-- Calendar Table -->
     <table class="calendar-table">
       <thead>
@@ -38,8 +38,8 @@
 
     <!-- Display Selected Dates -->
     <div v-if="attendanceLog.length" class="attendance-log">
-      <h4>Status</h4>
-      <ul>
+      <h4 >Status</h4>
+      <ul >
         <li v-for="(log, index) in attendanceLog" :key="index">
           {{ log.date }} - <strong>{{ log.status }}</strong>
         </li>
@@ -81,6 +81,7 @@ methods: {
     // Change the displayed month
   changeMonth(offset) {
     this.currentMonth += offset;
+    //checking month is not December
       if (this.currentMonth > 11) {
         this.currentMonth = 0;
         this.currentYear += 1;

@@ -1,5 +1,6 @@
 <template>
     <body class="loginbody">
+      <!--logo styling-->
         <div class="image-container">
         <img :src="logo" width="300" height="200" alt="logo" class="centered-image">
     </div>
@@ -48,28 +49,27 @@
     </div>
         
     </body>
-</template>
-  
-  <script>
+</template>  
+<script>
 export default {
-    data() {
-      return {
-        employeeName: "",
-        password: "",
-        isLoggedIn: false,
-        showErrorModal: false,
-        logo: require("../assets/logo.jpg"),
-        employees: [
-          { name: "Sibongile Nkosi", password: "1234" },
-          { name: "Lungile Moyo", password: "1234" },
-          { name: "Thabo Molefe", password: "1234" },
-          { name: "Keshav Naidoo", password: "1234" },
-          { name: "Zanele Khumalo", password: "1234" },
-          { name: "Sipho Zulu", password: "1234" },
-          { name: "Naledi Moeketsi", password: "1234" },
-          { name: "Farai Gumbo", password: "1234" },
-          { name: "Karabo Dlamini", password: "1234" },
-          { name: "Fatima Patel", password: "1234" },
+  data() {
+    return {
+      employeeName: "",
+      password: "",
+      isLoggedIn: false,
+      showErrorModal: false,
+      logo: require("../assets/logo.jpg"),
+      employees: [
+        { name: "Sibongile Nkosi", password: "1234" },
+        { name: "Lungile Moyo", password: "1234" },
+        { name: "Thabo Molefe", password: "1234" },
+        { name: "Keshav Naidoo", password: "1234" },
+        { name: "Zanele Khumalo", password: "1234" },
+        { name: "Sipho Zulu", password: "1234" },
+        { name: "Naledi Moeketsi", password: "1234" },
+        { name: "Farai Gumbo", password: "1234" },
+        { name: "Karabo Dlamini", password: "1234" },
+        { name: "Fatima Patel", password: "1234" },
         ],
       };
     },

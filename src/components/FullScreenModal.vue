@@ -236,7 +236,7 @@ data() {
 }
 
 .modal-content {
-  background-color: rgb(221, 221, 239);
+  background-color: white;
   border: 2px solid blue;
   font-family: 'Times New Roman', Times, serif;
 }

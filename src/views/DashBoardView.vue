@@ -25,7 +25,7 @@
     </div>
     
     <!-- Render Employee Details -->
-    <EmployeeDetails
+  <EmployeeDetails
       v-if="selectedEmployee"
       :employee="selectedEmployee"
     />
@@ -477,10 +477,7 @@ export default {
       );
     },
   
-  }}
-  
- 
-  
+  }}  
 </script>
 <style scoped>
 h1 {
@@ -507,11 +504,7 @@ h1 {
 }
 .body{
   color: rgb(69, 114, 164)
-
 }
-
-
-
 </style>
 
 
