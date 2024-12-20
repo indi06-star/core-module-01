@@ -12,12 +12,14 @@ import LeaveRequest from './components/LeaveRequest.vue';
 import NavBar from './components/NavBar.vue';
 import Payroll from './views/PayrollView.vue';
 
+
 export default {
   components: {
     NavBar, // Registering the NavBar component
     Payroll,
     AttendanceCalender,
-    LeaveRequest
+    LeaveRequest,
+  
 
   },
   data() {

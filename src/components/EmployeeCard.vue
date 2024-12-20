@@ -1,3 +1,4 @@
+// This is the card structure from Bootstrap
 <template>
   <div class="row g-3"></div>
   <div class="col-md-4">
