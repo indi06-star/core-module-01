@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import DashBoardView from '@/views/DashBoardView.vue';
 import HomeView from '@/views/HomeView.vue';
 import PayrollView from '@/views/PayrollView.vue';
+
 import AttendanceView from '@/views/AttendanceView.vue';
 import LeaveRequestViwe from '@/views/LeaveRequestViwe.vue';
 import EmployeesDetailsView from '@/views/EmployeesDetailsView.vue';

@@ -1,3 +1,4 @@
+// This is the card structure from Bootstrap
 <template>
   <!--used bootstrap cards with image slots-->
   <div class="row g-3">

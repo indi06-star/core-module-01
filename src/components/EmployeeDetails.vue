@@ -1,3 +1,4 @@
+// Employee information
 <template>
   <div class="employee-details card mt-4">
     <div class="card-header">
