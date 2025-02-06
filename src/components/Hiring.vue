@@ -16,6 +16,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -35,23 +36,19 @@ export default {
         name: this.name,
         position: this.position,
         department: this.department,
-        image: this.image || 'https://via.placeholder.com/150',
+        image: this.image || require("../assets/default_image.png"), // Add default image here
       };
-       // Simulate a delay (e.g., 2 seconds)
-       setTimeout(() => {
+      // Simulate a delay (e.g., 2 seconds)
+      setTimeout(() => {
         this.$emit('add-employee', newEmployee); // Emit event after delay
         this.resetForm();
         this.isLoading = false; // Stop loading
-      }, 2000);
+      }, 1000);
     },
     resetForm() {
       this.showForm = false;
       this.name = this.position = this.department = this.image = '';
     },
   },
-  
-}
-  
-
+};
 </script>
-

@@ -1,7 +1,7 @@
 <template>
   <!--used bootstrap cards with image slots-->
-  <div class="row g-3"></div>
-  <div class="col-md-4">
+  <div class="row g-3">
+  <div class="col-md-3">
     <div class="card">
       <div class="card-header">
         <!--used mustached braces  to get employees data-->
@@ -24,6 +24,7 @@
           Show More
         </button>
       </div>
+      </div>
     </div>
   </div>
 </template>
@@ -44,40 +45,42 @@ export default {
   },
 };
 </script>
-<style >
+<style>
 /* Card Styling */
 .card {
-  width: 350px;
-  height: 270px;
+  width: 400px;
+  height: 280px;
   text-align: center;
   box-shadow: 0p x4px 15px rgba(0, 0, 0, 0.1) ;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  /* border: 1px solid blue; */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; 
+  border: 0.5px solid blue;
   font-family: 'Times New Roman', Times, serif;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); */
   border-radius: 8px;
   transition: box-shadow 0.3s ease;
 
 }
 .col-md-4 {
  display: flex;
- margin-bottom: 20px;
+ margin-bottom: 10px;
 }
 .card:hover {
   transform: scale(1.05);
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
 }
 .card-img-top {
-  height: px; 
   width: 100px;
   border-radius: 50%;
   margin-bottom: 0px;
   object-fit: cover;
   
+}
+img{
+  /* height: 10px; */
 }
 /* Text Styling */
 .card-title {

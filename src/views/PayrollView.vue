@@ -14,7 +14,7 @@
         <thead>
           <tr>
             <th>Employee ID</th>
-            <th>Employee name</th>
+            <th>Employee Name</th>
             <th>Hours Worked</th>
             <th>Leave Deductions</th>
             <th>Final Salary</th>
@@ -53,6 +53,7 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue';
+import { jsPDF } from 'jspdf';
 
 export default {
   components: {
@@ -97,18 +98,26 @@ export default {
       this.showPayslipModal = false;
     },
     downloadPayslip() {
-      const payslip = `
-        Payslip for Employee ID: ${this.selectedPayslip.employeeId}
-        -----------------------------------
-        Hours Worked: ${this.selectedPayslip.hoursWorked}
-        Leave Deductions: R${this.selectedPayslip.leaveDeductions}
-        Final Salary: R${this.selectedPayslip.finalSalary}
-      `;
-      const blob = new Blob([payslip], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `Employee_${this.selectedPayslip.employeeId}_Payslip.txt`;
-      link.click();
+      const { employeeId, employeeName, hoursWorked, leaveDeductions, finalSalary } = this.selectedPayslip;
+
+      // Calculate tax (Example: 10% tax on final salary)
+      const tax = finalSalary * 0.1;
+      const netSalary = finalSalary - tax;
+
+      // Create PDF document
+      const doc = new jsPDF();
+      doc.setFont('times');
+      
+      doc.text(`Payslip for Employee ID: ${employeeId}`, 20, 20);
+      doc.text(`Employee Name: ${employeeName}`, 20, 30);
+      doc.text(`Hours Worked: ${hoursWorked}`, 20, 40);
+      doc.text(`Leave Deductions: R${leaveDeductions}`, 20, 50);
+      doc.text(`Gross Salary: R${finalSalary}`, 20, 60);
+      doc.text(`Tax Deducted (10%): R${tax.toFixed(2)}`, 20, 70);
+      doc.text(`Net Salary (after tax): R${netSalary.toFixed(2)}`, 20, 80);
+
+      // Save the generated PDF
+      doc.save(`Employee_${employeeId}_Payslip.pdf`);
     },
   }
 }
@@ -136,7 +145,6 @@ h1 {
   font-family: 'Times New Roman', Times, serif;
   text-align: center;
   font-size: 50px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 4px 4px 6px rgba(0, 0, 0, 0.2), 6px 6px 8px rgba(0, 0, 0, 0.1);
   color: black;
 }
 

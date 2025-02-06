@@ -2,14 +2,14 @@
   <NavBar/>
   <div class="body">
     <div class="container my-5">
-    <h1><strong>Dashboard</strong></h1>
-    <input
+      <h1>Employees Information</h1>  
+  <input
         type="text"
         v-model="searchQuery"
         placeholder="Search by Employee Name or Department"
         class="search-bar mb-4"
-      />
-    <Hiring @add-employee="addEmployee"/>
+        id="search"
+      />    
     <div class="row">
       <div class="col-md-4" v-for="employee in filteredEmployees" :key="employee.id"> 
         <!-- Render Employee Cards with styling preserved -->
@@ -23,7 +23,8 @@
         </div>
       </div>
     </div>
-    
+    <Hiring @add-employee="addEmployee"/> <Dismisal @remove-employee="removeEmployee"/>
+
     <!-- Render Employee Details -->
   <EmployeeDetails
       v-if="selectedEmployee"
@@ -40,7 +41,6 @@
     @openAttendanceCalendar="openAttendanceCalendar"
     @openLeaveRequest="openLeaveRequest"
   />
-  <Dismisal @remove-employee="removeEmployee"/>
   </div>
 
 </template>
@@ -63,7 +63,8 @@ export default {
     Hiring,
     Dismisal,
     NavBar,
-    Payroll
+    Payroll,
+
   },
   data() {
     return {
@@ -77,7 +78,6 @@ export default {
           contact: "sibongile.nkosi@moderntech.com",
           history: "Joined in 2015, promoted to Senior in 2018",
           salary: 70000,
-          reviews: ["Exceeds Expectations","Great team leader", "Meets goals on time"],
           leaveRequests: [
             { date: "2024-12-01",reason:"Personal" ,status: "Pending" },
           ],
@@ -103,7 +103,6 @@ export default {
                     status: "Present"
                 }
           ]
-
         },
         {
           id: 2,
@@ -442,13 +441,26 @@ export default {
     addEmployee(newEmployee) {
       this.employees.push(newEmployee); // Add new employee to the list
     },
+  deleteEmployee() {
+  console.log("Emitting delete event with ID:", this.id);
+  this.$emit('delete-employee', parseInt(this.id));
+  this.showForm = false;
+  this.id = '';
+},
+
     removeEmployee(employeeId) {
       // Remove the employee with the specified ID
       this.employees = this.employees.filter(employee => employee.id !== employeeId);
     },
-
     openModal(employee) {
-      this.selectedEmployee = employee;
+      // Check if employee has valid data
+      if (employee.name && employee.position && employee.department) {
+        this.selectedEmployee = employee;
+        this.isModalVisible = true;
+        this.showError = false; // Hide error if employee data is valid
+      } else {
+        this.showError = true; // Show error if employee data is invalid
+      }
     },
     openModal(employee) {
       this.selectedEmployee = employee;
@@ -484,7 +496,6 @@ h1 {
   font-family: 'Times New Roman', Times, serif;
   text-align: center;
   font-size: 50px; /* Adjust font size as needed */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 4px 4px 6px rgba(0, 0, 0, 0.2), 6px 6px 8px rgba(0, 0, 0, 0.1);
   color: black;
 }
 .search-bar {
@@ -493,7 +504,7 @@ h1 {
   font-size: 16px;
   margin-bottom: 20px;
   text-align: center;
-  border: 2px solid blue;
+  /* border: 2px solid rgb(52, 52, 103); */
 
 }
 .custom-navbar {

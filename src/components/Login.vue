@@ -32,6 +32,7 @@
             />
           </div>
           <button type="submit" class="btn btn-primary">Login</button>
+          <button type="submit" @click.prevent="showForgotPasswordForm" class="btn btn-primary">Forgot Password?</button>
         </form>
       </div>
       <!-- Success message -->
@@ -46,8 +47,26 @@
           <button @click="closeErrorModal" class="btn btn-secondary">Close</button>
         </div>
       </div>
-    </div>
-        
+      <!-- Forgot Password Form -->
+      <div v-if="showForgotPassword">
+        <br>
+        <h3 align="center">Reset Password</h3>
+        <div class="form-group">
+          <label for="newPassword">Administrator id:</label>
+          <input type="text" placeholder="Enter Admnistrator Id">
+          <label for="newPassword">New Password:</label>
+          <input
+            type="password"
+            id="newPassword"
+            v-model="newPassword"
+            class="form-control"
+            placeholder="Enter new password"
+            required
+          />
+        </div>
+        <button @click="submitForgotPassword" class="btn btn-primary">Save Password</button>
+      </div>
+    </div>   
     </body>
 </template>  
 <script>
@@ -58,6 +77,7 @@ export default {
       password: "",
       isLoggedIn: false,
       showErrorModal: false,
+      showForgotPassword: false,
       logo: require("../assets/logo.jpg"),
       employees: [
         { name: "Sibongile Nkosi", password: "1234" },
@@ -88,7 +108,29 @@ export default {
       closeErrorModal() {
         this.showErrorModal = false;
       },
+      submitForgotPassword() {
+      const employee = this.employees.find(
+        (e) => e.name === this.employeeName
+      );
+      if (employee) {
+        employee.password = this.newPassword; // Change the password
+        alert("Password updated successfully!");
+        this.showForgotPassword = false; // Hide the forgot password form
+      } else {
+        alert("Employee not found!");
+      }
     },
+    showForgotPasswordForm() {
+      this.showForgotPassword = true; // Show the forgot password form
+    },
+    logout() {
+      this.isLoggedIn = false;
+      this.employeeName = "";
+      this.password = "";
+    },
+    },
+    
+
   };
 </script>
   

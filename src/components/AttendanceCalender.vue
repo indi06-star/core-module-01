@@ -6,7 +6,6 @@
       <button @click="changeMonth(-1)" class="nav-button">&#8592;</button>
       <h3>{{ monthNames[currentMonth] }} {{ currentYear }}</h3>
       <button @click="changeMonth(1)" class="nav-button">&#8594;</button>
-      <button @click="closeCalendar" class="close-button">X</button>
     </div>
     <!-- Calendar Table -->
     <table class="calendar-table">
@@ -91,9 +90,7 @@ methods: {
       }
       this.generateCalendar();
     },
-
-
-    // Generate the calendar structure
+ // Generate the calendar structure
   generateCalendar() {
     const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
     const lastDate = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
@@ -189,7 +186,6 @@ methods: {
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
-
 /* Calendar Header */
 .calendar-header {
   display: flex;
@@ -198,7 +194,7 @@ methods: {
 }
 
 .nav-button, .close-button {
-  background-color: #3498db;
+  background-color: black;
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -206,17 +202,12 @@ methods: {
   cursor: pointer;
   font-size: 1.2em;
 }
-
-.close-button {
-  background-color: #e74c3c;
-}
-
 .close-button:hover {
   background-color: #c0392b;
 }
-
 /* Calendar Table */
 .calendar-table {
+  height: 50px;
   width: 100%;
   border-collapse: collapse;
 }
@@ -230,7 +221,7 @@ methods: {
 }
 
 .calendar-table th {
-  background-color: rgb(39, 39, 109);
+  background-color: rgb(86, 86, 98);
   color: #fff;
 }
 
@@ -239,7 +230,7 @@ methods: {
 }
 
 .calendar-table td.present {
-  background-color: rgb(101, 134, 177);
+  background-color: rgb(54, 75, 101);
   color: white;
 }
 
@@ -252,7 +243,6 @@ methods: {
   background-color: #f39c12;
   color: white;
 }
-
 /* Buttons */
 .btn {
   margin: 10px;
@@ -261,7 +251,6 @@ methods: {
   border-radius: 5px;
   cursor: pointer;
 }
-
 .btn-success {
   background-color: #2ecc71;
   color: white;
@@ -287,9 +276,6 @@ methods: {
   padding: 5px 0;
   font-size: 1em;
 }
-
-
-
 
 </style>
 

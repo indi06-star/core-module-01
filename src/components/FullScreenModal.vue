@@ -133,6 +133,9 @@ data() {
     showSection(section) {
       this.activeSection = section;
     },
+    closeModel(){
+      this.isModalVisible = false;
+    },
 
     // Handle leave request submission
   handleLeaveRequestSubmission(newRequest) {

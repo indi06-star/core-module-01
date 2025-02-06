@@ -2,7 +2,7 @@
   <div>
     <Login v-if="!isLoggedIn" @login-success="handleLoginSuccess" />
     <div v-else>
-      <NavBar />
+      <!-- <NavBar /> -->
       <div class="home-view" :style="{ backgroundImage: `url(${backgroundImage})` }">
         <div class="content">
           <h1 class="title">{{ title }}</h1>
@@ -48,7 +48,7 @@ export default {
   
 <style scoped>
 .home-view {
-    height: 85vh;
+    height: 100vh;
     background-size: cover;
     background-position: center;
     display: flex;
@@ -68,6 +68,7 @@ export default {
 .title {
     font-size: 70px;
     animation: slideIn 2s ease-in-out;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 4px 4px 6px rgba(0, 0, 0, 0.2), 6px 6px 8px rgba(0, 0, 0, 0.1);
   } 
 .subtitle {
     font-size: 1.2rem;
