@@ -1,23 +1,29 @@
-//the store is responsible for all the asyncs functions(fetching data)
+import {createStore} from "vuex"
 
-import { createStore } from 'vuex'
+export default createStore ({
+  state:{
+    employees : null
 
-export default createStore({
-  state: {
+},
+//commit
+mutations:{
+  setEmployees(state,payload){
+    state.employees = payload
 
-  },
-  getters: {
-
-  },
-  //commit
-  mutations: {
-  },
-
-  //dispatch
-  //payload (whatever information you paste on the body of the thunder client).
-  actions: {
- 
-  },
-  modules: {
   }
+
+},
+//handles any async data
+actions: {
+  async getData({commit}, payload){
+    let {employees} = await (await fetch("http://localhost:4000/employees")).json()
+  commit("setEmployees", employees)
+  
+    
+
+  }
+},
+modules:{
+
+}
 })
