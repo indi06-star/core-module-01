@@ -1,127 +1,43 @@
 <template>
-  <div class="tablePayroll">
-    <NavBar />
-    <br />
-    <h1><strong>Payroll Data</strong></h1>
-    <input
-      type="text"
-      v-model="searchQuery"
-      placeholder="Search by Employee Name"
-      class="search-bar mb-4"
-    />
-    <div>
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Employee ID</th>
-            <th>Employee Name</th>
-            <th>Hours Worked</th>
-            <th>Leave Deductions</th>
-            <th>Final Salary</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="data in filteredEmployees" :key="data.employeeId">
-            <td>{{ data.employeeId }}</td>
-            <td>{{ data.employeeName }}</td>
-            <td>{{ data.hoursWorked }}</td>
-            <td>{{ data.leaveDeductions }}</td>
-            <td>R{{ data.finalSalary }}.00</td>
-            <td>
-              <button @click="generatePayslip(data)" class="btn btn-primary">
-                Payslip
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Modal for displaying payslip -->
-    <div v-if="showPayslipModal" class="payslip-modal">
-      <h3>Payslip for Employee ID: {{ selectedPayslip.employeeId }}</h3>
-      <p>Employee Name: {{ selectedPayslip.employeeName }}</p>
-      <p>Hours Worked: {{ selectedPayslip.hoursWorked }}</p>
-      <p>Leave Deductions: R{{ selectedPayslip.leaveDeductions }}</p>
-      <p>Final Salary: R{{ selectedPayslip.finalSalary }}.00</p>
-      <button @click="downloadPayslip" class="btn btn-success">Download Payslip</button>
-      <button @click="closePayslipModal" class="btn btn-danger">Close</button>
-    </div>
-  </div>
+  <NavBar/>
+  <h1>Payroll</h1>
+  <table>
+    <thead>
+      <th>Payroll ID</th>
+      <th>Full name</th>
+      <th>Hours worked</th>
+      <th>Leave Deduction</th>
+      <th>Final salary</th>
+      <th>Calculate</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      <tr v-for="payrolls in $store.state.payroll" :key="payroll">
+        <td>{{ payrolls.payroll_id }}</td>
+        <td>{{ payrolls.full_name }}</td>
+        <td>{{ payrolls.hours_worked }}</td>
+        <td>{{ payrolls.leave_deductions }}</td>
+        <td>{{ payrolls.final_salary }}</td>
+        <td><button>Edit payslip</button></td>
+        <td><button>Download payslip</button></td>
+      </tr>
+    </tbody>
+  </table>
 </template>
-
 <script>
 import NavBar from '@/components/NavBar.vue';
-import { jsPDF } from 'jspdf';
 
 export default {
-  components: {
+  components:{
     NavBar
-  },
-  data() {
-    return {
-      payrollData: [
-        { employeeId: 1, employeeName: "Sibongile Nkosi", hoursWorked: 160, leaveDeductions: 8, finalSalary: 69500 },
-        { employeeId: 2, employeeName: "Lungile Moyo", hoursWorked: 150, leaveDeductions: 10, finalSalary: 79000 },
-        { employeeId: 3, employeeName: "Thabo Molefe", hoursWorked: 170, leaveDeductions: 4, finalSalary: 54800 },
-        { employeeId: 4, employeeName: "Keshav Naidoo", hoursWorked: 165, leaveDeductions: 6, finalSalary: 59700 },
-        { employeeId: 5, employeeName: "Zanele Khumalo", hoursWorked: 158, leaveDeductions: 5, finalSalary: 57850 },
-        { employeeId: 6, employeeName: "Sipho Zulu", hoursWorked: 168, leaveDeductions: 2, finalSalary: 64800 },
-        { employeeId: 7, employeeName: "Naledi Moeketsi", hoursWorked: 175, leaveDeductions: 3, finalSalary: 71800 },
-        { employeeId: 8, employeeName: "Farai Gumbo", hoursWorked: 160, leaveDeductions: 0, finalSalary: 56000 },
-        { employeeId: 9, employeeName: "Karabo Dlamini", hoursWorked: 155, leaveDeductions: 5, finalSalary: 61500 },
-        { employeeId: 10, employeeName: "Fatima Patel", hoursWorked: 162, leaveDeductions: 4, finalSalary: 57750 }
-      ],
-      searchQuery: "",
-      showPayslipModal: false,
-      selectedPayslip: null,
-    };
-  },
-  computed: {
-    filteredEmployees() {
-      const query = this.searchQuery.toLowerCase();
-      return this.payrollData.filter(employee => {
-        return (
-          employee.employeeName.toLowerCase().includes(query) ||
-          employee.employeeId.toString().includes(query)
-        );
-      });
-    }
-  },
-  methods: {
-    generatePayslip(data) {
-      this.selectedPayslip = data;
-      this.showPayslipModal = true;
-    },
-    closePayslipModal() {
-      this.showPayslipModal = false;
-    },
-    downloadPayslip() {
-      const { employeeId, employeeName, hoursWorked, leaveDeductions, finalSalary } = this.selectedPayslip;
 
-      // Calculate tax (Example: 10% tax on final salary)
-      const tax = finalSalary * 0.1;
-      const netSalary = finalSalary - tax;
-
-      // Create PDF document
-      const doc = new jsPDF();
-      doc.setFont('times');
-      
-      doc.text(`Payslip for Employee ID: ${employeeId}`, 20, 20);
-      doc.text(`Employee Name: ${employeeName}`, 20, 30);
-      doc.text(`Hours Worked: ${hoursWorked}`, 20, 40);
-      doc.text(`Leave Deductions: R${leaveDeductions}`, 20, 50);
-      doc.text(`Gross Salary: R${finalSalary}`, 20, 60);
-      doc.text(`Tax Deducted (10%): R${tax.toFixed(2)}`, 20, 70);
-      doc.text(`Net Salary (after tax): R${netSalary.toFixed(2)}`, 20, 80);
-
-      // Save the generated PDF
-      doc.save(`Employee_${employeeId}_Payslip.pdf`);
-    },
+  },
+  mounted(){
+    this.$store.dispatch("getpayroll")
   }
 }
 </script>
+
 
 <style scoped>
 table {

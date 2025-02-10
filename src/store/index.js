@@ -3,11 +3,27 @@ import { createStore } from 'vuex';
 export default createStore({
   state: {
     employees: null,
+    payroll: null,
+    leaverequests: null,
+
   },
   mutations: {
+    //employees
     setEmployees(state, payload) {
       state.employees = payload;
     },
+
+    //payroll
+    setpayroll(state, payload){
+      state.payroll= payload;
+    },
+    //leaverequest
+    setleaverequests(state, payload){
+      state.leaverequests = payload;
+    },
+
+
+
     addEmployee(state, newEmployee) {
       state.employees.push(newEmployee);
     },
@@ -26,6 +42,21 @@ export default createStore({
     },
   },
   actions: {
+    //PAYROLL TABLE (Getting all the information)
+     async getpayroll ({commit},payload){
+      const response = await fetch("http://localhost:4000/payroll")
+      const {payroll_records} = await response.json()
+      commit("setpayroll", payroll_records)
+    },
+
+    //LEAVEREQUEST TABLE 
+    async getleaverequests({commit},payload){
+      const response = await fetch("http://localhost:4000/leaverequests")
+      const {leave_requests} = await response.json()
+      commit("setleaverequests", leave_requests)
+    },
+
+
     async getData({ commit }) {
       const response = await fetch('http://localhost:4000/employees');
       const { employees } = await response.json();
