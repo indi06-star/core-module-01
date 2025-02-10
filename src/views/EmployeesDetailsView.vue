@@ -2,7 +2,6 @@
     <NavBar />
     <h1>EMPLOYEES DETAILS</h1>
     <button @click="showAddEmployeeModal">Add Employee</button>
-  
     <table class="employee-table">
       <thead>
         <tr>

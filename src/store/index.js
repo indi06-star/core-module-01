@@ -3,27 +3,32 @@ import { createStore } from 'vuex';
 export default createStore({
   state: {
     employees: null,
-    payroll: null,
+
+    //leaverequests
     leaverequests: null,
+
+    //payroll
+    payroll: [],
+    selectedPayroll: null, // Stores the selected payroll for editing
+    
 
   },
   mutations: {
-    //employees
-    setEmployees(state, payload) {
-      state.employees = payload;
-    },
-
     //payroll
     setpayroll(state, payload){
       state.payroll= payload;
+    },
+    setSelectedPayroll(state, payload) {
+      state.selectedPayroll = payload;
     },
     //leaverequest
     setleaverequests(state, payload){
       state.leaverequests = payload;
     },
-
-
-
+    //employees
+    setEmployees(state, payload) {
+      state.employees = payload;
+    },
     addEmployee(state, newEmployee) {
       state.employees.push(newEmployee);
     },
@@ -48,14 +53,91 @@ export default createStore({
       const {payroll_records} = await response.json()
       commit("setpayroll", payroll_records)
     },
-
-    //LEAVEREQUEST TABLE 
-    async getleaverequests({commit},payload){
-      const response = await fetch("http://localhost:4000/leaverequests")
-      const {leave_requests} = await response.json()
-      commit("setleaverequests", leave_requests)
+    // Fetch a single payroll record for editing
+      async getSinglePayroll({ commit }, payroll_id) {
+        const response = await fetch(`http://localhost:4000/payroll/${payroll_id}`);
+        const { payroll_record } = await response.json();
+        commit("setSelectedPayroll", payroll_record);
     },
-
+    //update payroll record
+    async updatePayroll({ commit }, payroll) {
+      const response = await fetch(`http://localhost:4000/payroll/${payroll.payroll_id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          employee_id: payroll.employee_id,
+          hours_worked: payroll.hours_worked,
+          leave_deductions: payroll.leave_deductions,
+          tax_deductions: payroll.tax_deductions,
+          insurance_deductions: payroll.insurance_deductions,
+          pension_deductions: payroll.pension_deductions,
+          final_salary: payroll.final_salary,
+        }),
+      });
+  
+      const { payroll_records } = await response.json();
+      commit("setpayroll", payroll_records);
+    },
+    //LEAVEREQUEST TABLE
+    async getleaverequests({ commit }) {
+      try {
+        const response = await fetch('http://localhost:4000/leaverequests');
+        const { leave_requests } = await response.json();
+        commit('setleaverequests', leave_requests);
+      } catch (error) {
+        console.error('Error fetching leave requests:', error);
+      }
+    },
+    async updateLeaveRequestStatus({ commit }, { leave_request_id, status }) {
+      try {
+        const response = await fetch(
+          `http://localhost:4000/leaverequests/${leave_request_id}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status }),
+          }
+        );
+  
+        if (response.ok) {
+          const { leave_requests } = await response.json();
+          commit('setleaverequests', leave_requests); // Update leave requests state
+        } else {
+          console.error('Failed to update leave request status');
+        }
+      } catch (error) {
+        console.error('Error updating leave request status:', error);
+      }
+    }, 
+  //   async getleaverequests({commit},payload){
+  //     const response = await fetch("http://localhost:4000/leaverequests")
+  //     const {leave_requests} = await response.json()
+  //     commit("setleaverequests", leave_requests)
+  //   },
+  //   async updateLeaveRequestStatus({ commit }, { leave_request_id, status }) {
+  //     try {
+  //         const response = await fetch(
+  //             `http://localhost:4000/leaverequests/${leave_request_id}`,
+  //             {
+  //                 method: 'PATCH',
+  //                 headers: {
+  //                     'Content-Type': 'application/json',
+  //                 },
+  //                 body: JSON.stringify({
+  //                   status,
+  //               }),
+  //           }
+  //         );
+  //         const { leave_requests } = await response.json();
+  //         commit('setleaverequests', leave_requests); // Update leave requests state
+  //     } catch (error) {
+  //         console.error('Error updating leave request status:', error);
+  //     }
+  // },
 
     async getData({ commit }) {
       const response = await fetch('http://localhost:4000/employees');

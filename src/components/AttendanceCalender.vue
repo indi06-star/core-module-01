@@ -1,48 +1,53 @@
 <template>
-  <!--Calender created using sets from https://dev.to/owais11-art/how-to-create-a-calendar-in-vue-4m0k -->
-  <div class="calendar-container">
-    <!-- Calendar Header -->
-    <div class="calendar-header">
-      <button @click="changeMonth(-1)" class="nav-button">&#8592;</button>
-      <h3>{{ monthNames[currentMonth] }} {{ currentYear }}</h3>
-      <button @click="changeMonth(1)" class="nav-button">&#8594;</button>
-    </div>
-    <!-- Calendar Table -->
-    <table class="calendar-table">
-      <thead>
-        <tr>
-          <th v-for="day in weekDays" :key="day">{{ day }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(week, weekIndex) in weeksInMonth" :key="weekIndex">
-          <td
-            v-for="day in week"
-            :key="day?.date"
-            :class="getDayClass(day)"
-            @click="selectDay(day)"
-          >
-            <span v-if="day">{{ day.day }}</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div>
+    <button @click="showCalendar = !showCalendar" class="toggle-button">
+      {{ showCalendar ? "Hide Calendar" : "Show Calendar" }}
+    </button>
 
-    <!-- Buttons for Actions -->
-    <div v-if="selectedDay" class="actions">
-      <p>Selected Date: <strong>{{ selectedDay.date }}</strong></p>
-      <button @click="markPresent" class="btn btn-success">Present</button>
-      <button @click="markAbsent" class="btn btn-danger">Absent</button>
-    </div>
+    <div v-if="showCalendar" class="calendar-container">
+      <!-- Calendar Header -->
+      <div class="calendar-header">
+        <button @click="changeMonth(-1)" class="nav-button">&#8592;</button>
+        <h3>{{ monthNames[currentMonth] }} {{ currentYear }}</h3>
+        <button @click="changeMonth(1)" class="nav-button">&#8594;</button>
+      </div>
+      <!-- Calendar Table -->
+      <table class="calendar-table">
+        <thead>
+          <tr>
+            <th v-for="day in weekDays" :key="day">{{ day }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(week, weekIndex) in weeksInMonth" :key="weekIndex">
+            <td
+              v-for="day in week"
+              :key="day?.date"
+              :class="getDayClass(day)"
+              @click="selectDay(day)"
+            >
+              <span v-if="day">{{ day.day }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-    <!-- Display Selected Dates -->
-    <div v-if="attendanceLog.length" class="attendance-log">
-      <h4 >Status</h4>
-      <ul >
-        <li v-for="(log, index) in attendanceLog" :key="index">
-          {{ log.date }} - <strong>{{ log.status }}</strong>
-        </li>
-      </ul>
+      <!-- Buttons for Actions -->
+      <div v-if="selectedDay" class="actions">
+        <p>Selected Date: <strong>{{ selectedDay.date }}</strong></p>
+        <button @click="markPresent" class="btn btn-success">Present</button>
+        <button @click="markAbsent" class="btn btn-danger">Absent</button>
+      </div>
+
+      <!-- Display Selected Dates -->
+      <div v-if="attendanceLog.length" class="attendance-log">
+        <h4>Status</h4>
+        <ul>
+          <li v-for="(log, index) in attendanceLog" :key="index">
+            {{ log.date }} - <strong>{{ log.status }}</strong>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -52,15 +57,16 @@ export default {
   props: {
     attendanceData: {
       type: Array,
-      default: () => [], // Default to an empty array
+      default: () => [],
     },
     approvedTimeOff: {
       type: Array,
-      default: () => [], // Default to an empty array
+      default: () => [],
     },
   },
   data() {
     return {
+      showCalendar: false,
       currentMonth: new Date().getMonth(),
       currentYear: new Date().getFullYear(),
       weeksInMonth: [],
@@ -76,11 +82,9 @@ export default {
   created() {
     this.generateCalendar();
   },
-methods: {
-    // Change the displayed month
-  changeMonth(offset) {
-    this.currentMonth += offset;
-    //checking month is not December
+  methods: {
+    changeMonth(offset) {
+      this.currentMonth += offset;
       if (this.currentMonth > 11) {
         this.currentMonth = 0;
         this.currentYear += 1;
@@ -90,92 +94,74 @@ methods: {
       }
       this.generateCalendar();
     },
- // Generate the calendar structure
-  generateCalendar() {
-    const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
-    const lastDate = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-    const days = [];
+    generateCalendar() {
+      const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
+      const lastDate = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+      const days = [];
 
-      // Add empty cells for alignment
-  for (let i = 0; i < firstDay; i++) {
-    days.push(null);
+      for (let i = 0; i < firstDay; i++) {
+        days.push(null);
       }
-
-      // Add actual days with attendance data
-  for (let i = 1; i <= lastDate; i++) {
-    const date = `${this.currentYear}-${this.currentMonth + 1}-${i}`;
-    const status = this.getStatusForDate(date);
-    days.push({ day: i, date, status });
+      for (let i = 1; i <= lastDate; i++) {
+        const date = `${this.currentYear}-${this.currentMonth + 1}-${i}`;
+        const status = this.getStatusForDate(date);
+        days.push({ day: i, date, status });
       }
-
-  this.weeksInMonth = [];
-    while (days.length) {
-    this.weeksInMonth.push(days.splice(0, 7));
+      this.weeksInMonth = [];
+      while (days.length) {
+        this.weeksInMonth.push(days.splice(0, 7));
       }
     },
-
-// Get the status of the day from attendanceData and approvedTimeOff
-  getStatusForDate(date) {
-    if (this.attendanceData.includes(date)) {
-      return "Absent";
+    getStatusForDate(date) {
+      if (this.attendanceData.includes(date)) {
+        return "Absent";
       } else if (this.approvedTimeOff.includes(date)) {
         return "Approved Time Off";
       }
       return "Present";
     },
-
-    // Highlight selected day
-  selectDay(day) {
-    if (day) {
-    this.selectedDay = day;
+    selectDay(day) {
+      if (day) {
+        this.selectedDay = day;
       }
     },
-
-    // Mark the selected day as Present
-  markPresent() {
-    if (this.selectedDay) {
-      this.selectedDay.status = "Present";
-      this.updateLog(this.selectedDay.date, "Present");
-      this.$emit("update-attendance", { date: this.selectedDay.date, status: "Present" });
+    markPresent() {
+      if (this.selectedDay) {
+        this.selectedDay.status = "Present";
+        this.updateLog(this.selectedDay.date, "Present");
+        this.$emit("update-attendance", { date: this.selectedDay.date, status: "Present" });
       }
     },
-
-    // Mark the selected day as Absent
-  markAbsent() {
-    if (this.selectedDay) {
-      this.selectedDay.status = "Absent";
-      this.updateLog(this.selectedDay.date, "Absent");
-      this.$emit("update-attendance", { date: this.selectedDay.date, status: "Absent" });
-
+    markAbsent() {
+      if (this.selectedDay) {
+        this.selectedDay.status = "Absent";
+        this.updateLog(this.selectedDay.date, "Absent");
+        this.$emit("update-attendance", { date: this.selectedDay.date, status: "Absent" });
       }
     },
-
-// Update the attendance log
-  updateLog(date, status) {
-    const existing = this.attendanceLog.find(log => log.date === date);
-    if (existing) {
-      existing.status = status;
+    updateLog(date, status) {
+      const existing = this.attendanceLog.find(log => log.date === date);
+      if (existing) {
+        existing.status = status;
       } else {
         this.attendanceLog.push({ date, status });
       }
     },
-
-    // Close the calendar
-  closeCalendar() {
-    this.$emit("closeCalendar"); // Emit close event to parent
-    },
-
-    // Get CSS class for a day
-  getDayClass(day) {
-    if (!day) return "empty";
-    if (day.status === "Absent") return "absent";
-    if (day.status === "Present") return "present";
-    if (day.status === "Approved Time Off") return "approved-time-off";
+    getDayClass(day) {
+      if (!day) return "empty";
+      if (day.status === "Absent") return "absent";
+      if (day.status === "Present") return "present";
+      if (day.status === "Approved Time Off") return "approved-time-off";
       return "";
     },
   },
 };
 </script>
+
+
+
+
+
 <style scoped>
 .calendar-container {
   margin: 20px auto;
@@ -275,6 +261,20 @@ methods: {
 .attendance-log li {
   padding: 5px 0;
   font-size: 1em;
+}
+.toggle-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.toggle-button:hover {
+  background-color: #0056b3;
 }
 
 </style>
