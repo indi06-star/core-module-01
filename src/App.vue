@@ -1,18 +1,18 @@
 <template>
   <div id="app">
     <router-view />
-    <div class="dashboard">
+    <!-- <div class="dashboard">
       <EmployeeStats :employees="employees" />
       <CompanyGrowth :growthData="growthData" />
       <TaskManagement :tasks="tasks" />
       <AttendanceTracking :attendanceData="attendanceData" />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 // Importing the components
-import AttendanceCalender from './components/AttendanceCalender.vue';
+// import AttendanceCalender from './components/AttendanceCalender.vue';
 import LeaveRequest from './components/LeaveRequest.vue';
 import Login from './components/Login.vue';
 import NavBar from './components/NavBar.vue';
@@ -23,7 +23,7 @@ export default {
   components: {
     NavBar, // Registering the NavBar component
     Payroll,
-    AttendanceCalender,
+    // AttendanceCalender,
     LeaveRequest,
     Login,
 

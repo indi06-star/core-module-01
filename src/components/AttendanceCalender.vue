@@ -27,14 +27,12 @@
         </tr>
       </tbody>
     </table>
-
     <!-- Buttons for Actions -->
     <div v-if="selectedDay" class="actions">
       <p>Selected Date: <strong>{{ selectedDay.date }}</strong></p>
       <button @click="markPresent" class="btn btn-success">Present</button>
       <button @click="markAbsent" class="btn btn-danger">Absent</button>
     </div>
-
     <!-- Display Selected Dates -->
     <div v-if="attendanceLog.length" class="attendance-log">
       <h4 >Status</h4>
@@ -46,7 +44,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   props: {
@@ -95,25 +92,21 @@ methods: {
     const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
     const lastDate = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
     const days = [];
-
       // Add empty cells for alignment
   for (let i = 0; i < firstDay; i++) {
     days.push(null);
       }
-
       // Add actual days with attendance data
   for (let i = 1; i <= lastDate; i++) {
     const date = `${this.currentYear}-${this.currentMonth + 1}-${i}`;
     const status = this.getStatusForDate(date);
     days.push({ day: i, date, status });
       }
-
   this.weeksInMonth = [];
     while (days.length) {
     this.weeksInMonth.push(days.splice(0, 7));
       }
     },
-
 // Get the status of the day from attendanceData and approvedTimeOff
   getStatusForDate(date) {
     if (this.attendanceData.includes(date)) {
@@ -123,14 +116,12 @@ methods: {
       }
       return "Present";
     },
-
     // Highlight selected day
   selectDay(day) {
     if (day) {
     this.selectedDay = day;
       }
     },
-
     // Mark the selected day as Present
   markPresent() {
     if (this.selectedDay) {
@@ -139,17 +130,14 @@ methods: {
       this.$emit("update-attendance", { date: this.selectedDay.date, status: "Present" });
       }
     },
-
     // Mark the selected day as Absent
   markAbsent() {
     if (this.selectedDay) {
       this.selectedDay.status = "Absent";
       this.updateLog(this.selectedDay.date, "Absent");
       this.$emit("update-attendance", { date: this.selectedDay.date, status: "Absent" });
-
       }
     },
-
 // Update the attendance log
   updateLog(date, status) {
     const existing = this.attendanceLog.find(log => log.date === date);
@@ -159,12 +147,10 @@ methods: {
         this.attendanceLog.push({ date, status });
       }
     },
-
     // Close the calendar
   closeCalendar() {
     this.$emit("closeCalendar"); // Emit close event to parent
     },
-
     // Get CSS class for a day
   getDayClass(day) {
     if (!day) return "empty";
@@ -192,7 +178,6 @@ methods: {
   justify-content: space-between;
   align-items: center;
 }
-
 .nav-button, .close-button {
   background-color: black;
   color: #fff;
@@ -203,7 +188,7 @@ methods: {
   font-size: 1.2em;
 }
 .close-button:hover {
-  background-color: #c0392b;
+  background-color: #C0392B;
 }
 /* Calendar Table */
 .calendar-table {
@@ -211,7 +196,6 @@ methods: {
   width: 100%;
   border-collapse: collapse;
 }
-
 .calendar-table th,
 .calendar-table td {
   border: 1px solid #ddd;
@@ -219,28 +203,23 @@ methods: {
   text-align: center;
   cursor: pointer;
 }
-
 .calendar-table th {
   background-color: rgb(86, 86, 98);
   color: #fff;
 }
-
 .calendar-table td.empty {
-  background-color: #f5f5f5;
+  background-color: #F5F5F5;
 }
-
 .calendar-table td.present {
   background-color: rgb(54, 75, 101);
   color: white;
 }
-
 .calendar-table td.absent {
-  background-color: #e74c3c;
+  background-color: #E74C3C;
   color: white;
 }
-
 .calendar-table td.approved-time-off {
-  background-color: #f39c12;
+  background-color: #F39C12;
   color: white;
 }
 /* Buttons */
@@ -252,31 +231,24 @@ methods: {
   cursor: pointer;
 }
 .btn-success {
-  background-color: #2ecc71;
+  background-color: #2ECC71;
   color: white;
 }
-
 .btn-danger {
-  background-color: #e74c3c;
+  background-color: #E74C3C;
   color: white;
 }
-
 /* Attendance Log */
 .attendance-log {
   margin-top: 20px;
   text-align: left;
 }
-
 .attendance-log ul {
   list-style: none;
   padding: 0;
 }
-
 .attendance-log li {
   padding: 5px 0;
   font-size: 1em;
 }
-
 </style>
-
-
