@@ -1,178 +1,191 @@
 <template>
-  <div class="tablePayroll">
-    <NavBar />
-    <br />
-    <h1><strong>Payroll Data</strong></h1>
-    <input
-      type="text"
-      v-model="searchQuery"
-      placeholder="Search by Employee Name"
-      class="search-bar mb-4"
-    />
-    <div>
-      <table class="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Employee ID</th>
-            <th>Employee Name</th>
-            <th>Hours Worked</th>
-            <th>Leave Deductions</th>
-            <th>Final Salary</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="data in filteredEmployees" :key="data.employeeId">
-            <td>{{ data.employeeId }}</td>
-            <td>{{ data.employeeName }}</td>
-            <td>{{ data.hoursWorked }}</td>
-            <td>{{ data.leaveDeductions }}</td>
-            <td>R{{ data.finalSalary }}.00</td>
-            <td>
-              <button @click="generatePayslip(data)" class="btn btn-primary">
-                Payslip
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <NavBar />
+  <br>
+  <div class="table-container">
+    <h2>Remuneration records</h2>
+    <!-- Search Bar -->
+     <div>
+      <input v-model="searchQuery" placeholder="Search by Employee Name..." class="search-bar" />
+     </div>
 
-    <!-- Modal for displaying payslip -->
-    <div v-if="showPayslipModal" class="payslip-modal">
-      <h3>Payslip for Employee ID: {{ selectedPayslip.employeeId }}</h3>
-      <p>Employee Name: {{ selectedPayslip.employeeName }}</p>
-      <p>Hours Worked: {{ selectedPayslip.hoursWorked }}</p>
-      <p>Leave Deductions: R{{ selectedPayslip.leaveDeductions }}</p>
-      <p>Final Salary: R{{ selectedPayslip.finalSalary }}.00</p>
-      <button @click="downloadPayslip" class="btn btn-success">Download Payslip</button>
-      <button @click="closePayslipModal" class="btn btn-danger">Close</button>
-    </div>
+    <!-- Styled Payroll Table -->
+    <table class="payroll-table">
+      <thead>
+        <tr>
+          <th>Payroll ID</th>
+          <th>Employee Full Name</th>
+          <th>Hours Worked</th>
+          <th>Leave Deductions</th>
+          <th>Gross Salary (R)</th>
+          <th>Hourly Rate (R)</th>
+          <th>Deductions (R)</th>
+          <th>Remuneration (Per Annum) (R)</th>
+          <th>Net Salary (R)</th>
+          <th>Final Salary (R)</th>
+          <th>Download Payslip</th>
+        </tr>
+      </thead>
+      <tbody v-if="filteredPayrolls.length > 0">
+        <tr v-for="payroll in filteredPayrolls" :key="payroll.payroll_id">
+          <td>{{ payroll.payroll_id }}</td>
+          <td>{{ payroll.full_name }}</td>
+          <td>{{ payroll.hours_worked }}</td>
+          <td>{{ payroll.leave_deductions }}</td>
+          <td>{{ formatAmount(payroll.gross_salary) }}</td>
+          <td>{{ formatAmount(payroll.hourly_rate) }}</td>
+          <td>{{ formatAmount(payroll.deductions) }}</td>
+          <td>{{ formatAmount(payroll.remuneration_pa) }}</td>
+          <td>{{ formatAmount(payroll.net_salary_with_deductions) }}</td>
+          <td>{{ formatAmount(payroll.final_salary) }}</td>
+          <td><button @click="downloadPayslip(payroll)">Download</button></td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr>
+          <td colspan="11" class="no-results">No results found.</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue';
-import { jsPDF } from 'jspdf';
+import NavBar from "@/components/NavBar.vue";
+import jsPDF from "jspdf";
 
 export default {
-  components: {
-    NavBar
-  },
+  components: { NavBar },
   data() {
     return {
-      payrollData: [
-        { employeeId: 1, employeeName: "Sibongile Nkosi", hoursWorked: 160, leaveDeductions: 8, finalSalary: 69500 },
-        { employeeId: 2, employeeName: "Lungile Moyo", hoursWorked: 150, leaveDeductions: 10, finalSalary: 79000 },
-        { employeeId: 3, employeeName: "Thabo Molefe", hoursWorked: 170, leaveDeductions: 4, finalSalary: 54800 },
-        { employeeId: 4, employeeName: "Keshav Naidoo", hoursWorked: 165, leaveDeductions: 6, finalSalary: 59700 },
-        { employeeId: 5, employeeName: "Zanele Khumalo", hoursWorked: 158, leaveDeductions: 5, finalSalary: 57850 },
-        { employeeId: 6, employeeName: "Sipho Zulu", hoursWorked: 168, leaveDeductions: 2, finalSalary: 64800 },
-        { employeeId: 7, employeeName: "Naledi Moeketsi", hoursWorked: 175, leaveDeductions: 3, finalSalary: 71800 },
-        { employeeId: 8, employeeName: "Farai Gumbo", hoursWorked: 160, leaveDeductions: 0, finalSalary: 56000 },
-        { employeeId: 9, employeeName: "Karabo Dlamini", hoursWorked: 155, leaveDeductions: 5, finalSalary: 61500 },
-        { employeeId: 10, employeeName: "Fatima Patel", hoursWorked: 162, leaveDeductions: 4, finalSalary: 57750 }
-      ],
-      searchQuery: "",
-      showPayslipModal: false,
-      selectedPayslip: null,
+      searchQuery: "", // Holds the search input
     };
   },
   computed: {
-    filteredEmployees() {
-      const query = this.searchQuery.toLowerCase();
-      return this.payrollData.filter(employee => {
-        return (
-          employee.employeeName.toLowerCase().includes(query) ||
-          employee.employeeId.toString().includes(query)
-        );
-      });
-    }
+    // Filters payroll data based on searchQuery
+    filteredPayrolls() {
+      return this.$store.state.payroll.filter((payroll) =>
+        payroll.full_name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+  },
+  mounted() {
+    this.$store.dispatch("getpayroll");
   },
   methods: {
-    generatePayslip(data) {
-      this.selectedPayslip = data;
-      this.showPayslipModal = true;
+    formatAmount(amount) {
+      const numAmount = parseFloat(amount);
+      return isNaN(numAmount) ? "Invalid Amount" : `R${numAmount.toFixed(2)}`;
     },
-    closePayslipModal() {
-      this.showPayslipModal = false;
-    },
-    downloadPayslip() {
-      const { employeeId, employeeName, hoursWorked, leaveDeductions, finalSalary } = this.selectedPayslip;
-
-      // Calculate tax (Example: 10% tax on final salary)
-      const tax = finalSalary * 0.1;
-      const netSalary = finalSalary - tax;
-
-      // Create PDF document
+    downloadPayslip(payroll) {
       const doc = new jsPDF();
-      doc.setFont('times');
-      
-      doc.text(`Payslip for Employee ID: ${employeeId}`, 20, 20);
-      doc.text(`Employee Name: ${employeeName}`, 20, 30);
-      doc.text(`Hours Worked: ${hoursWorked}`, 20, 40);
-      doc.text(`Leave Deductions: R${leaveDeductions}`, 20, 50);
-      doc.text(`Gross Salary: R${finalSalary}`, 20, 60);
-      doc.text(`Tax Deducted (10%): R${tax.toFixed(2)}`, 20, 70);
-      doc.text(`Net Salary (after tax): R${netSalary.toFixed(2)}`, 20, 80);
+      doc.setFont("helvetica", "bold","boder");
+      doc.text("Payslip", 80, 20);
+      doc.setFont("helvetica", "normal");
+      doc.text(`Payroll ID: ${payroll.payroll_id}`, 20, 40);
+      doc.text(`Employee Name: ${payroll.full_name}`, 20, 50);
+      doc.text(`Hours Worked: ${payroll.hours_worked}`, 20, 60);
+      doc.text(`Leave Deductions: ${payroll.leave_deductions}`, 20, 70);
+      doc.text(`Gross Salary: ${this.formatAmount(payroll.gross_salary)}`, 20, 80);
+      doc.text(`Hourly Rate: ${this.formatAmount(payroll.hourly_rate)}`, 20, 90);
+      doc.text(`Deductions: ${this.formatAmount(payroll.deductions)}`, 20, 100);
+      doc.text(`Remuneration (Per Annum): ${this.formatAmount(payroll.remuneration_pa)}`, 20, 110);
+      doc.text(`Net Salary: ${this.formatAmount(payroll.net_salary_with_deductions)}`, 20, 120);
+      doc.text(`Final Salary: ${this.formatAmount(payroll.final_salary)}`, 20, 130);
 
-      // Save the generated PDF
-      doc.save(`Employee_${employeeId}_Payslip.pdf`);
+      doc.save(`payslip_${payroll.payroll_id}.pdf`);
     },
-  }
-}
+  },
+};
 </script>
 
-<style scoped>
-table {
+<style>
+/* Container Styling */
+.table-container {
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 24px;
+  color: #1A3E7D; /* Dark blue */
+  margin-bottom: 20px;
+}
+
+/* Search Bar Styling */
+.search-bar {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #B0C4DE; /* Light steel blue */
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.search-bar:focus {
+  border-color: #4C6D9A; /* Slightly darker blue on focus */
+  outline: none;
+}
+
+/* Payroll Table */
+.payroll-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
-  font-family: 'Times New Roman', Times, serif;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-th {
-  background-color: #f4f4f4;
-}
-
-h1 {
-  font-family: 'Times New Roman', Times, serif;
+.payroll-table th,
+.payroll-table td {
+  padding: 12px;
   text-align: center;
-  font-size: 50px;
-  color: black;
+  border: 1px solid #B0C4DE; /* Light steel blue border */
+  background-color: #F1F8FF; /* Light blue background for rows */
+  color: #333; /* Dark text for contrast */
+  font-weight: normal;
 }
 
-.payslip-modal {
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: 50%;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+/* Table Header Styling */
+.payroll-table th {
+  background-color: #4C6D9A; /* Professional bluish header background */
+  color: white;
+  font-weight: bold;
 }
 
-.search-bar {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  margin-bottom: 20px;
-  text-align: center;
-  border: 2px solid blue;
+/* Alternate Row Coloring */
+.payroll-table tr:nth-child(even) td {
+  background-color: #E6F1FF; /* Lighter blue for even rows */
 }
 
-.form-control {
+.payroll-table tr:nth-child(odd) td {
+  background-color: #FFFFFF; /* White for odd rows */
+}
+
+/* Button Styling */
+button {
+  background-color: #4C6D9A; /* Bluish background for buttons */
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
   border-radius: 5px;
-  padding: 10px;
-  font-size: 16px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
+
+button:hover {
+  background-color: #365B7A; /* Darker blue for hover effect */
+}
+
+/* No Results Message */
+.no-results {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+  padding: 15px;
+}
+
+
 </style>
