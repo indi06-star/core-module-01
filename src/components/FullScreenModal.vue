@@ -109,13 +109,11 @@
 </template>
 
 <script>
-import AttendanceCalender from './AttendanceCalender.vue';
 import LeaveRequest from './LeaveRequest.vue';
 
 export default {
   components: {
     LeaveRequest,
-    AttendanceCalender,
   },
   props: {
     employee: Object,

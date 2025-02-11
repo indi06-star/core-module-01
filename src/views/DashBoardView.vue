@@ -45,7 +45,6 @@
 
 </template>
 <script>
-import AttendanceCalender from "@/components/AttendanceCalender.vue";
 import Dismisal from "@/components/Dismisal.vue";
 import EmployeeCard from "@/components/EmployeeCard.vue";
 import EmployeeDetails from "@/components/EmployeeDetails.vue";
@@ -59,7 +58,6 @@ export default {
     EmployeeCard,
     EmployeeDetails,
     FullScreenModal,
-    AttendanceCalender,
     Hiring,
     Dismisal,
     NavBar,
