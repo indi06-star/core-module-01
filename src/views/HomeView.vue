@@ -7,7 +7,7 @@
         <div class="content">
           <h1 class="title">{{ title }}</h1>
           <p class="subtitle">{{ subtitle }}</p>
-          <button class="btn btn-primary" @click="goToDashboard">Employees Dashboard</button>
+          <button class="btn btn-primary" @click="goToEmployees">Employees Management Center</button>
         </div>
       </div>
     </div>
@@ -31,8 +31,8 @@ export default {
     };
   },
   methods: {
-    goToDashboard() {
-      this.$router.push("/dashboard");
+    goToEmployees() {
+      this.$router.push("/employees");
     },
     handleLoginSuccess() {
       this.isLoggedIn = true; // Update login status

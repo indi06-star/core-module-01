@@ -1,18 +1,25 @@
 <template>
   <NavBar />
-  <h1>Leave Requests</h1>
-  <table>
+  <h1>Employees leave requests</h1>
+  <div  class="search-container">
+    <input v-model="searchQuery" placeholder="Search employees..." class="search-bar" />
+  </div>
+  <div v-if="isLoading">Loading leave requests...</div>
+
+  <table v-else>
     <thead>
-      <th>Leave Request ID</th>
-      <th>Employee ID</th>
-      <th>Employee Full Name</th>
-      <th>Date</th>
-      <th>Reason</th>
-      <th>Status</th>
-      <th>Action</th>
+      <tr>
+        <th>Leave Request ID</th>
+        <th>Employee ID</th>
+        <th>Employee Full Name</th>
+        <th>Date</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th>Action(Accept/Deny requests)</th>
+      </tr>
     </thead>
     <tbody>
-      <tr v-for="leaverequest in $store.state.leaverequests" :key="leaverequest.leave_request_id">
+      <tr v-for="leaverequest in filteredleaverequests" :key="leaverequest.leave_request_id">
         <td>{{ leaverequest.leave_request_id }}</td>
         <td>{{ leaverequest.employee_id }}</td>
         <td>{{ leaverequest.full_name }}</td>
@@ -44,18 +51,40 @@
 </template>
 
 <script>
-import AttendanceCalender from '@/components/AttendanceCalender.vue';
 import NavBar from '@/components/NavBar.vue';
 
 export default {
+  data() {
+    return {
+      searchQuery: '',
+      isLoading: true,  // Added loading state
+    };
+  },
+
   components: {
     NavBar,
-    AttendanceCalender
   },
+
+  computed: {
+    // Filters leave requests data based on searchQuery
+    filteredleaverequests() {
+      // Ensure leaverequests is not null before filtering
+      if (this.$store.state.leaverequests) {
+        return this.$store.state.leaverequests.filter((leaverequest) =>
+          leaverequest.full_name.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+      }
+      return []; // Return an empty array if leaverequests is null or undefined
+    },
+  },
+
   mounted() {
     // Dispatch the action to load leave requests when the component is mounted
-    this.$store.dispatch('getleaverequests');
+    this.$store.dispatch('getleaverequests').then(() => {
+      this.isLoading = false;  // Set loading to false after data is fetched
+    });
   },
+
   methods: {
     async updateStatus(leave_request_id, status) {
       // Dispatch the action to update the status of the leave request
@@ -64,6 +93,8 @@ export default {
   }
 }
 </script>
+
+
 <style scoped>
 #accept, #deny{
   color:black
@@ -91,6 +122,32 @@ h1 {
   font-size: 50px;
   color: black;
 }
+
+/* .search-bar {
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+} */
+/* Centering the search bar container */
+/* Centering the search bar container */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Styling the search bar */
+.search-bar {
+  width: 50%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 </style>
 
 

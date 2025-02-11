@@ -1,10 +1,12 @@
 <template>
   <NavBar />
   <br>
-  <div class="container">
-    <!-- <h2>Payroll</h2> -->
+  <div class="table-container">
+    <h2>Remuneration records</h2>
     <!-- Search Bar -->
-    <input v-model="searchQuery" placeholder="Search by Employee Name..." class="search-bar" />
+     <div>
+      <input v-model="searchQuery" placeholder="Search by Employee Name..." class="search-bar" />
+     </div>
 
     <!-- Styled Payroll Table -->
     <table class="payroll-table">
@@ -96,54 +98,85 @@ export default {
 };
 </script>
 
-<style scoped>
-.container {
+<style>
+/* Container Styling */
+.table-container {
   width: 90%;
-  margin: auto;
+  margin: 0 auto;
+  padding: 20px;
   text-align: center;
+}
+
+h2 {
+  font-size: 24px;
+  color: #1A3E7D; /* Dark blue */
+  margin-bottom: 20px;
 }
 
 /* Search Bar Styling */
 .search-bar {
-  width: 50%;
+  width: 60%;
   padding: 10px;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #B0C4DE; /* Light steel blue */
   border-radius: 5px;
   font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.search-bar:focus {
+  border-color: #4C6D9A; /* Slightly darker blue on focus */
+  outline: none;
 }
 
 /* Payroll Table */
 .payroll-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .payroll-table th,
 .payroll-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
+  padding: 12px;
   text-align: center;
+  border: 1px solid #B0C4DE; /* Light steel blue border */
+  background-color: #F1F8FF; /* Light blue background for rows */
+  color: #333; /* Dark text for contrast */
+  font-weight: normal;
 }
 
+/* Table Header Styling */
 .payroll-table th {
-  background-color: #f4f4f4;
+  background-color: #4C6D9A; /* Professional bluish header background */
+  color: white;
   font-weight: bold;
+}
+
+/* Alternate Row Coloring */
+.payroll-table tr:nth-child(even) td {
+  background-color: #E6F1FF; /* Lighter blue for even rows */
+}
+
+.payroll-table tr:nth-child(odd) td {
+  background-color: #FFFFFF; /* White for odd rows */
 }
 
 /* Button Styling */
 button {
-  background-color: #007bff;
+  background-color: #4C6D9A; /* Bluish background for buttons */
   color: white;
   padding: 8px 12px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #365B7A; /* Darker blue for hover effect */
 }
 
 /* No Results Message */
@@ -153,4 +186,6 @@ button:hover {
   color: #888;
   padding: 15px;
 }
+
+
 </style>
