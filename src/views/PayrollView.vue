@@ -63,7 +63,7 @@ export default {
   computed: {
     // Filters payroll data based on searchQuery
     filteredPayrolls() {
-      return this.$store.state.payroll.filter((payroll) =>
+      return this.$store.state.payroll?.filter((payroll) =>
         payroll.full_name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     },
@@ -106,13 +106,11 @@ export default {
   padding: 20px;
   text-align: center;
 }
-
 h2 {
   font-size: 24px;
   color: #1A3E7D; /* Dark blue */
   margin-bottom: 20px;
 }
-
 /* Search Bar Styling */
 .search-bar {
   width: 60%;
@@ -122,13 +120,13 @@ h2 {
   border-radius: 5px;
   font-size: 16px;
   transition: border-color 0.3s;
+  border: 1px solid #007BFF; /* Blue border for the search bar */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .search-bar:focus {
   border-color: #4C6D9A; /* Slightly darker blue on focus */
   outline: none;
 }
-
 /* Payroll Table */
 .payroll-table {
   width: 100%;
@@ -136,7 +134,6 @@ h2 {
   margin-top: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 .payroll-table th,
 .payroll-table td {
   padding: 12px;
@@ -146,23 +143,19 @@ h2 {
   color: #333; /* Dark text for contrast */
   font-weight: normal;
 }
-
 /* Table Header Styling */
 .payroll-table th {
   background-color: #4C6D9A; /* Professional bluish header background */
   color: white;
   font-weight: bold;
 }
-
 /* Alternate Row Coloring */
 .payroll-table tr:nth-child(even) td {
   background-color: #E6F1FF; /* Lighter blue for even rows */
 }
-
 .payroll-table tr:nth-child(odd) td {
   background-color: #FFFFFF; /* White for odd rows */
 }
-
 /* Button Styling */
 button {
   background-color: #4C6D9A; /* Bluish background for buttons */
@@ -174,11 +167,9 @@ button {
   font-size: 14px;
   transition: background-color 0.3s ease;
 }
-
 button:hover {
   background-color: #365B7A; /* Darker blue for hover effect */
 }
-
 /* No Results Message */
 .no-results {
   text-align: center;
@@ -186,6 +177,4 @@ button:hover {
   color: #888;
   padding: 15px;
 }
-
-
 </style>

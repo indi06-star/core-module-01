@@ -6,7 +6,7 @@
   </div>
   <div v-if="isLoading">Loading leave requests...</div>
 
-  <table v-else>
+  <table v-else class="leaverequest-table">
     <thead>
       <tr>
         <th>Leave Request ID</th>
@@ -70,7 +70,7 @@ export default {
     filteredleaverequests() {
       // Ensure leaverequests is not null before filtering
       if (this.$store.state.leaverequests) {
-        return this.$store.state.leaverequests.filter((leaverequest) =>
+        return this.$store.state.leaverequests?.filter((leaverequest) =>
           leaverequest.full_name.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       }
@@ -94,60 +94,103 @@ export default {
 }
 </script>
 
-
 <style scoped>
-#accept, #deny{
-  color:black
+#accept, #deny {
+  color: white;
 }
-table {
-  width: 100%;
+h2 {
+  font-size: 24px;
+  color: #1A3E7D; /* Dark blue */
+  margin-bottom: 20px;
+  text-align: center;
+}
+.leaverequest-table{
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
   border-collapse: collapse;
-  margin: 20px 0;
-  font-family: 'Times New Roman', Times, serif;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
+.leaverequest-table th,
+.leaverequest-table td{
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #B0C4DE; /* Light steel blue border */
+  background-color: #F1F8FF; /* Light blue background for rows */
+  color: #333; /* Dark text for contrast */
+  font-weight: normal;
+}
+.leaverequest-table th{
+  background-color: #4C6D9A; /* Professional bluish header background */
+  color: white;
+  font-weight: bold;
+}
+.leaverequest-table tr:nth-child(even) td {
+  background-color: #E6F1FF; /* Lighter blue for even rows */
+}
+.leaverequest-table tr:nth-child(odd) td {
+  background-color: #FFFFFF; /* White for odd rows */
+}
 th, td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px 16px;
   text-align: left;
 }
-
 th {
-  background-color: #f4f4f4;
+  background-color: #007BFF; /* Blue background for table headers */
+  color: white;
+  font-weight: bold;
 }
-
+td {
+  background-color: #FFFFFF; /* White background for table data */
+}
 h1 {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Arial', sans-serif;
   text-align: center;
-  font-size: 50px;
-  color: black;
+  font-size: 36px;
+  color: #007BFF; /* Bluish color for the heading */
+  margin-bottom: 20px;
 }
-
-/* .search-bar {
-  width: 50%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-} */
-/* Centering the search bar container */
-/* Centering the search bar container */
 .search-container {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
-
-/* Styling the search bar */
 .search-bar {
   width: 50%;
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #007BFF; /* Blue border for the search bar */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
+.search-bar:focus {
+  border-color: #0056B3; /* Darker blue when the search bar is focused */
+}
+button {
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: opacity 0.3s ease;
+}
+button.btn-success {
+  background-color: #28A745; /* Green for Accept */
+  border: none;
+  color: white;
+}
+button.btn-danger {
+  background-color: #DC3545; /* Red for Deny */
+  border: none;
+  color: white;
+}
+button:hover {
+  opacity: 0.8; /* Slight hover effect */
+}
+button:focus {
+  outline: none;
+}
 </style>
 
 

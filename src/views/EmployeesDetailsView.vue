@@ -1,7 +1,8 @@
 <template>
   <NavBar />
+  <br>
   <div class="header-container">
-    <h1>Employees Information</h1>
+    <h2>Employees Information</h2>
     <input v-model="searchQuery" placeholder="Search employees..." class="search-bar" />
     <button @click="showAddEmployeeModal" class="add-btn">Add Employee</button>
   </div>
@@ -103,7 +104,7 @@ export default {
   computed: {
     ...mapState(['employees']),
     filteredEmployees() {
-      return this.employees.filter((employee) =>
+      return this.employees?.filter((employee) =>
         Object.values(employee).some((value) =>
           String(value).toLowerCase().includes(this.searchQuery.toLowerCase())
         )
@@ -165,14 +166,14 @@ export default {
 /* Modal Styling */
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  top: 60%;
+  left: 50%;
+  width: 90%;
+  height: auto; /* This allows the height to adjust based on content */
+  transform: translate(-50%, -50%); /* Centers the modal */
+  display: block; /* Ensure the modal is displayed as a block element */
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000; /* Makes sure the modal appears above other content */
 }
 
 .modal-content {
@@ -182,42 +183,53 @@ export default {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
-
-.modal button {
-  margin: 10px;
-}
-
-/* Styling for the table */
+/* Styling for Employee Table */
 .employee-table {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
   margin: 20px 0;
   font-family: Arial, sans-serif;
   border: 1px solid #B0C4DE; /* Light steel blue */
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
+h2 {
+  font-size: 24px;
+  color: #1A3E7D; /* Dark blue */
+  margin-bottom: 20px;
+}
 .employee-table th,
 .employee-table td {
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #B0C4DE; /* Light steel blue border */
+  text-align: center;
+  border: 1px solid #B0C4DE; /* Light steel blue border */
+  background-color: #F1F8FF; /* Light blue background for rows */
+  color: #333; /* Dark text for contrast */
+  font-weight: normal;
 }
-
 .employee-table th {
-  background-color: #4C6D9A; /* Professional bluish header */
+  background-color: #4C6D9A; /* Bluish header */
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
+.employee-table tr:nth-child(even) td{
+  background-color: #E6F1FF;
+}
+.employee-table tr:nth-child(odd) td{
+  background-color: #FFFFFF;
+}
 .employee-table tr:hover {
-  background-color: #f1f1f1; /* Light gray background for hover */
+  background-color: #F1F1F1; /* Light gray background on hover */
 }
-
-/* Action buttons styling */
+/* Action Buttons Styling */
 .action-buttons {
   display: flex;
   gap: 10px;
 }
-
 .edit-btn,
 .delete-btn {
   padding: 8px 12px;
@@ -227,71 +239,55 @@ export default {
   font-weight: bold;
   color: white;
 }
-
 .add-btn {
   display: block;
   margin: 0 auto 20px;
   padding: 10px 20px;
-  background-color: #007bff; /* Blue background for add button */
+  background-color:  #1A3E7D; /* Blue background for add button */
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
-
 .add-btn:hover {
-  background-color: #0056b3; /* Darker blue for hover effect */
+  background-color: #0056B3; /* Darker blue for hover effect */
 }
-
 .edit-btn {
   background-color: #4CAF50; /* Green for edit */
 }
-
 .delete-btn {
-  background-color: #f44336; /* Red for delete */
+  background-color: #F44336; /* Red for delete */
 }
-
 .edit-btn:hover {
-  background-color: #45a049; /* Darker green for edit button hover */
+  background-color: #45A049; /* Darker green for edit hover */
 }
-
 .delete-btn:hover {
-  background-color: #e53935; /* Darker red for delete button hover */
+  background-color: #E53935; /* Darker red for delete hover */
 }
-
 /* Header Container */
 .header-container {
   text-align: center;
   margin-bottom: 20px;
 }
-
+/* Search Bar Styling */
 .search-bar {
   width: 50%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid #007BFF;
   border-radius: 5px;
 }
-
 .search-bar:focus {
-  border-color: #4C6D9A; /* Dark blue border for search input focus */
+  border-color: #4C6D9A; /* Dark blue border for focus */
   outline: none;
 }
-
-/* Add Employee Button */
-.add-btn:hover {
-  background-color: #0056b3; /* Darker blue for add button hover */
-}
-
 .employee-table th, .employee-table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
 }
-
 .employee-table th {
   background-color: #4C6D9A; /* Bluish header */
   color: white;
 }
 </style>
-  

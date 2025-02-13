@@ -8,9 +8,6 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <router-link to="/dashboard" class="nav-link" href="#">Dashboard</router-link>
-        </li>
-        <li class="nav-item">
           <router-link to='/employees' class="nav-link" href="#">Employees Details</router-link>
         </li>
         <li class="nav-item">
