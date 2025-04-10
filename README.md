@@ -14,7 +14,7 @@ Author
 Live Demo
 Link to the live deployed website
 
-Technologies Used
+# **Technologies Used**
 Front-end: Vue
 Styling: Custom CSS
 Back-end: node
@@ -22,7 +22,7 @@ Database: MySQL
 Setup Instructions
 Follow these steps to run the system on your local development environment:
 
-Prerequisites:
+# **Prerequisites**:
 
 MySQL Server installed and running
 Clone the Repository:
@@ -38,7 +38,7 @@ npm i
 npm i sql2
 npm i dotenv
 
-Database Setup:
+# **Database Setup**:
 
 Create a new database named moderntech_db in your MySQL server.
 Run the UpdatedModernTechSolutionsDataBase.sql in workbench  to get the data and tables for ModerntechSolutions
@@ -48,7 +48,7 @@ define('DB_USER', 'your_db_user');
 define('DB_PASS', 'your_db_password');
 define('DB_NAME', 'moderntech_db');
 ?>
-Web Server Configuration:
+# **Web Server Configuration**:
 
 Ensure your web server is configured to point to the project's public directory (or the main entry point of your application).
 If using Apache, you might need to enable mod_rewrite and configure a .htaccess file (if provided).
@@ -58,7 +58,7 @@ npm run serve for frontend
 node --watch index.js for api 
 Then, open your web browser and navigate to [http://localhost:8000.](http://localhost:8080/)
 
-Key Features
+# **Key Features**
 This  website implements the following key features:
 
 User Login and Registration: Secure user registration and login functionality.
